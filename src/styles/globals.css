@@ -17,13 +17,63 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  margin-left: auto;
+  margin-right: auto;
+  background: #d6d3d1;
+}
+
+button {
+  margin: none;
+  padding: none;
+}
+
+.hover-header:hover > h2,
+svg,
+button {
+  color: #737373;
+  fill: #737373;
+}
+
+.form-button:hover > svg,
+button {
+  fill: #3b82f6;
+}
+
+.g-recaptcha {
+  transform: scale(0.8);
+  transform-origin: 0 0;
+}
+
+.submission-achievement {
+  transform: scale(0.7);
+  transform-origin: 0 0;
+}
+
+.instrument-item {
+  position: relative;
+  left: -0.4rem;
+}
+
+.form-button {
+  color: #737373;
+}
+.form-button-inactive > svg,
+button {
+  color: #a8a29e;
+  fill: #a8a29e;
+}
+
+.form-button:hover {
+  color: #3b82f6;
+}
+
+.form-button > svg,
+button {
+  fill: #737373;
+}
+
+::selection {
+  background: #d6d3d1;
 }
 
 @layer utilities {
