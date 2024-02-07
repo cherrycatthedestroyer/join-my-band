@@ -11,6 +11,8 @@ import useWindowDimensions, {
   filterButtonStyle,
 } from "../../scripts/helper";
 
+import Image from "next/image";
+
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import { Submission } from "../../store/submissions";
@@ -107,12 +109,6 @@ const Home: React.FC<PropsFromRedux> = ({
 
   return (
     <div className="flex flex-col grow-0 justify-center mx-auto w-4/5 mb-6 md:w-3/5 xl:w-3/5">
-      <img
-        src="/logo.png"
-        alt="test-picture"
-        className="xl:w-2/5 xl:self-center grow-0 shrink-0 scale-75 xl:mb-6 object-scale-down mt-4"
-      />
-
       <Form handleSubmit={handleSubmit} />
 
       <div className="flex flex-col lg:w-4/5 lg:mx-auto">
@@ -245,21 +241,20 @@ const Home: React.FC<PropsFromRedux> = ({
                           </span>
                         ) : undefined}
                       </div>
-                      {width >= 768 && (
-                        <ul className="flex flex-wrap gap-2">
-                          {item.achievements[0].achievement_name.value.trim()
-                            .length > 0 ? (
-                            <li className={cardButtonStyling + "text-nowrap"}>
-                              {item.achievements[0].achievement_name.value}
-                            </li>
-                          ) : undefined}
-                          {item.achievements.length > 1 ? (
-                            <li className={cardButtonStyling + "text-nowrap"}>
-                              {"+ " + (item.achievements.length - 1)}
-                            </li>
-                          ) : undefined}
-                        </ul>
-                      )}
+
+                      <ul className="flex flex-wrap gap-2">
+                        {item.achievements[0].achievement_name.value.trim()
+                          .length > 0 ? (
+                          <li className={cardButtonStyling + "text-nowrap"}>
+                            {item.achievements[0].achievement_name.value}
+                          </li>
+                        ) : undefined}
+                        {item.achievements.length > 1 ? (
+                          <li className={cardButtonStyling + "text-nowrap"}>
+                            {"+ " + (item.achievements.length - 1)}
+                          </li>
+                        ) : undefined}
+                      </ul>
                     </div>
                   </div>
                 </li>
