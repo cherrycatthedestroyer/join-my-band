@@ -25,7 +25,13 @@ const Home: React.FC<PropsFromRedux> = ({ submission, setSelectedSub }) => {
       <ul>
         {subList.length > 0 ? (
           subList.map((item, item_index) => {
-            return <PerformerCard item={item} item_index={item_index} />;
+            return (
+              <PerformerCard
+                item={item}
+                item_index={item_index}
+                key={item_index}
+              />
+            );
           })
         ) : (
           <p className="lowercase text-stone-600 text-xs font-normal mb-4">
