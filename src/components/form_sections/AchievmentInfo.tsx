@@ -181,11 +181,7 @@ const AchievementInfo: React.FC<PropsFromRedux> = ({
       </div>
       <div className="mt-6">
         <ReCAPTCHA
-          sitekey={
-            typeof process.env.NEXT_PUBLIC_CAPTCHA_KEY === "string"
-              ? process.env.NEXT_PUBLIC_CAPTCHA_KEY
-              : ""
-          }
+          sitekey="6LdZjGEpAAAAALpXo_AZOnvnGfDvVqX4lJBDYW5U"
           onChange={(token) =>
             token !== null ? setCaptchaToken(token) : undefined
           }
