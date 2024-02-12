@@ -32,7 +32,10 @@ const Submission: React.FC<PropsFromRedux> = ({
       </button>
       {submission.map((item, item_index) =>
         item_index === clientState.selectedSubmission ? (
-          <div className="bg-white shadow-md rounded mb-2 flex flex-col xl:flex-row gap-2">
+          <div
+            className="bg-white shadow-md rounded mb-2 flex flex-col xl:flex-row gap-2"
+            key={item_index}
+          >
             <img
               src="/test-profile.jpg"
               alt="test-picture"
@@ -84,7 +87,7 @@ const Submission: React.FC<PropsFromRedux> = ({
               <ul className="text-stone-600 list-disc list-inside text-xs font-normal mb-4 text-nowrap">
                 {item.instruments.map((instrument, instrument_index) => {
                   return (
-                    <li className="lowercase">
+                    <li className="lowercase" key={instrument_index}>
                       <span className="instrument-item">
                         <span>{"plays "}</span>
                         <span className="font-bold">
@@ -125,14 +128,14 @@ const Submission: React.FC<PropsFromRedux> = ({
                   <div>
                     {item.achievements.map((achievement, achievement_index) =>
                       achievement_index === clientState.selectedAchievement ? (
-                        <>
+                        <div key={achievement_index}>
                           <p className="text-slate-500 text-xs mb-2">
                             {achievement.achievement_date.value}
                           </p>
                           <p className="text-left font-normal text-stone-700 text-xs">
                             {achievement.achievement_description.value}
                           </p>
-                        </>
+                        </div>
                       ) : undefined
                     )}
                   </div>
