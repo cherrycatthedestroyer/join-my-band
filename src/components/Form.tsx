@@ -12,11 +12,12 @@ const formHeader =
 const formHeaderInactive =
   "uppercase text-xs font-normal text-stone-400 mb-4 shrink-0 xl:text-base";
 
-interface Props extends PropsFromRedux {
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-}
-
-const Form: React.FC<Props> = ({ stateList, handleSubmit, setFormOpen }) => {
+const Form: React.FC<PropsFromRedux> = ({
+  stateList,
+  setFormOpen,
+  addSubmission,
+  setComplete,
+}) => {
   const { data: session, status } = useSession();
   const { width } = useWindowDimensions();
   function handleClick() {
@@ -27,18 +28,47 @@ const Form: React.FC<Props> = ({ stateList, handleSubmit, setFormOpen }) => {
     }
   }
   function handleCancel() {
+    signOut();
     setFormOpen(false);
+  }
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (stateList.error_list.length === 0) {
+      if (
+        !(
+          stateList.achievements[0].achievement_name.value.trim().length > 0 &&
+          stateList.achievements[0].achievement_description.value.trim()
+            .length > 0 &&
+          stateList.achievements[0].achievement_date.value.trim().length > 0
+        )
+      ) {
+      }
+      addSubmission({
+        personal: stateList.personal,
+        instruments: stateList.instruments,
+        achievements: stateList.achievements,
+      });
+      setComplete();
+    }
   }
   return (
     <>
       {stateList.form_open ? (
         <>
+          <button
+            className="hover:text-white text-stone-700 text-xs pl-1 pb-2 rounded self-start"
+            onClick={handleCancel}
+          >
+            {stateList.complete ? "apply as different person" : "cancel"}
+          </button>
           <form
-            className="bg-white shadow-md rounded px-8 pt-4 pb-8 mb-2 lg:w-4/5 lg:mx-auto shrink-0 grow-0 flex flex-col"
+            className="bg-white shadow-md rounded px-8 pt-4 pb-8 mb-2"
             onSubmit={(e) => handleSubmit(e)}
           >
             {stateList.complete ? (
-              <h1 className="text-center mt-4">Thank you for submitting</h1>
+              <>
+                <h1 className="text-center mt-4">thank you for submitting</h1>
+              </>
             ) : (
               <>
                 <ul className="list-disc marker:text-red-500 list-inside mb-4">
@@ -108,30 +138,41 @@ const Form: React.FC<Props> = ({ stateList, handleSubmit, setFormOpen }) => {
           </form>
         </>
       ) : (
-        <button
-          type="submit"
-          className={
-            "mt-4 bg-stone-700 hover:bg-stone-600 text-white py-8 px-3 rounded lg:w-4/5 lg:mx-auto"
-          }
-          onClick={handleClick}
-        >
-          {status === "unauthenticated" ? (
-            <span className="flex gap-2 justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 488 512"
-                width={20}
-                height={20}
-                className="fill-white self-center"
-              >
-                <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
-              </svg>
-              <p>apply with Google </p>
-            </span>
-          ) : (
-            <p>click to apply</p>
-          )}
-        </button>
+        <>
+          <button
+            className={`hover:text-white block text-stone-700 text-xs pb-2 pl-1 rounded self-start + ${
+              status !== "authenticated" ? "invisible" : undefined
+            }`}
+            onClick={handleCancel}
+          >
+            {"sign out " + session?.user?.email}
+          </button>
+
+          <button
+            type="submit"
+            className={
+              "bg-stone-700 hover:bg-stone-600 text-white py-8 px-3 rounded w-full"
+            }
+            onClick={handleClick}
+          >
+            {status === "unauthenticated" ? (
+              <span className="flex gap-2 justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 488 512"
+                  width={20}
+                  height={20}
+                  className="fill-white self-center"
+                >
+                  <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
+                </svg>
+                <p>apply with Google</p>
+              </span>
+            ) : (
+              <p>click to apply</p>
+            )}
+          </button>
+        </>
       )}
     </>
   );
@@ -145,6 +186,3 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 // Export the connected component
 export default connector(Form);
-
-/*<InstrumentInfo />
-              <AchievementInfo />*/

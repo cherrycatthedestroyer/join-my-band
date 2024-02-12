@@ -1,6 +1,5 @@
 export function convertToLowerCamelCase(str: string) {
   const words = str.split("_");
-
   return words.join(" ");
 }
 
@@ -26,9 +25,12 @@ export const formButtonStyle =
 export const forumButtonInactiveStyle =
   "flex gap-2 form-button-inactive text-xs md:text-m my-auto text-nowrap";
 export const filterButtonStyle =
-  "bg-stone-200 hover:bg-stone-400 text-xs text-stone-700 font py-2 px-2 rounded mb-2";
+  "bg-stone-100 hover:bg-stone-200 text-xs text-stone-700 font py-2 px-2 rounded mb-2";
 export const filterButtonSelectedStyle =
-  "bg-stone-400 text-xs text-stone-700 font py-2 px-2 rounded mb-2";
+  "bg-stone-200 text-xs text-stone-700 font py-2 px-2 rounded mb-2";
+export const cardButtonStyling =
+  "leading-tight tracking-tighter bg-stone-200 text-xs font py-2 px-2 rounded mb-2";
+
 import { useState, useEffect } from "react";
 import { Submission } from "../store/submissions";
 
@@ -68,11 +70,11 @@ function totalSkills(stateObject: Submission) {
 function totalExperience(stateObject: Submission) {
   let results = 0;
   stateObject.instruments.map((item) => {
-    if (item.instrument_profeciency.value === "Casual") {
+    if (item.instrument_experience.value === "Casual") {
       results += 1;
-    } else if (item.instrument_profeciency.value === "Part-time") {
+    } else if (item.instrument_experience.value === "Part-time") {
       results += 2;
-    } else if (item.instrument_profeciency.value === "Professional") {
+    } else if (item.instrument_experience.value === "Professional") {
       results += 3;
     }
   });
