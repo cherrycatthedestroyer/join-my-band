@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.10",
     "@reduxjs/toolkit": "^2.1.0",
+    "axios": "^1.6.7",
     "clsx": "^2.1.0",
     "dotenv-webpack": "^8.0.1",
     "mongodb": "^6.3.0",

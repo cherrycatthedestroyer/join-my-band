@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export function convertToLowerCamelCase(str: string) {
   const words = str.split("_");
   return words.join(" ");
@@ -162,6 +164,21 @@ export function sortByFilter(stateObject: Submission[], term: string) {
   }
   return stateObject;
 }
+
+interface SinglePokemonResponse {
+  name: string;
+  // Other properties might be included here, such as abilities, types, stats, etc.
+}
+
+export const fetchRandomPokemon = async () => {
+  const res = await axios.get<SinglePokemonResponse>(
+    ("https://pokeapi.co/api/v2/pokemon/" +
+      (Math.floor(Math.random() * 360) + 1)) as string
+  );
+  return {
+    name: res.data.name,
+  };
+};
 
 export const instrumentTypes = [
   "Piano",

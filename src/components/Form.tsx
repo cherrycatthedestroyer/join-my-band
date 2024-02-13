@@ -7,7 +7,12 @@ import PersonalInfo from "@/components/form_sections/PersonalInfo";
 import useWindowDimensions from "../../scripts/helper";
 import { useSession, signIn, signOut } from "next-auth/react";
 
+import { useEffect, useState } from "react";
+
+import { fetchRandomPokemon } from "../../scripts/helper";
+
 import { connectToDatabase } from "../../scripts/mongodb";
+import { AxiosError } from "axios";
 
 const formHeader =
   "uppercase text-xs font-normal text-stone-700 mb-4 shrink-0 xl:text-base";
@@ -22,6 +27,16 @@ const Form: React.FC<PropsFromRedux> = ({
 }) => {
   const { data: session, status } = useSession();
   const { width } = useWindowDimensions();
+  const [nickname, setNickname] = useState<string | null>();
+
+  useEffect(() => {
+    fetchRandomPokemon()
+      .then((p) => setNickname(p.name))
+      .catch((e: Error | AxiosError) => console.log(e));
+  }, []);
+
+  if (!nickname) return null;
+
   function handleClick() {
     if (status === "authenticated") {
       setFormOpen(true);
@@ -140,12 +155,14 @@ const Form: React.FC<PropsFromRedux> = ({
       ) : (
         <>
           <button
-            className={`hover:text-white block text-stone-700 text-xs pb-2 pl-1 rounded self-start + ${
-              status !== "authenticated" ? "invisible" : undefined
+            className={`block text-stone-700 text-xs pb-2 pl-1 rounded self-start ${
+              status !== "authenticated" ? "" : "hover:text-white"
             }`}
-            onClick={handleCancel}
+            onClick={status !== "authenticated" ? undefined : handleCancel}
           >
-            {"sign out " + session?.user?.email}
+            {status !== "authenticated"
+              ? "anonymous " + nickname
+              : "sign out " + session?.user?.email}
           </button>
 
           <button
