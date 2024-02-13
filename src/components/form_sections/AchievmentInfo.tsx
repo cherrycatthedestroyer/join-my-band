@@ -8,7 +8,7 @@ import Button from "./input_components/Button";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import { useState } from "react";
-import useWindowDimensions from "../../../scripts/helper";
+import useWindowDimensions, { getCurrentDate } from "../../../scripts/helper";
 
 const buttonStyling =
   "leading-tight tracking-tighter bg-stone-200 hover:bg-stone-300 text-xs font py-2 px-2 rounded mb-2";
@@ -27,20 +27,19 @@ const AchievementInfo: React.FC<PropsFromRedux> = ({
 }) => {
   const [captchaToken, setCaptchaToken] = useState<string>("");
   const achievments = stateList.achievements;
-  const isError = stateList.instrument_is_error;
   const selectedAchievment = stateList.selected_achievement;
+  const isError = stateList.achievement_is_error;
   const { width } = useWindowDimensions();
 
   function handleAddAchievment() {
     if (
-      achievments[selectedAchievment].achievement_name.value.trim().length <
-        2 ||
-      achievments[selectedAchievment].achievement_description.value.trim()
-        .length < 5 ||
-      achievments[selectedAchievment].achievement_date.value.trim().length < 6
+      stateList.achievements[selectedAchievment].achievement_name.value.trim()
+        .length < 2
     ) {
+      console.log("yes");
       setAchievementError(true);
     } else {
+      console.log("no");
       setAchievementError(false);
       addAchievement({
         achievement_name: {
@@ -59,16 +58,18 @@ const AchievementInfo: React.FC<PropsFromRedux> = ({
         },
         achievement_date: {
           name: "achievement_date",
-          value: "",
+          value: getCurrentDate(),
           isValid: true,
           placeholder: "Select the date of completion",
           section_name: "achievements",
         },
       });
     }
+    console.log("woah");
   }
 
   function handleRemoveAchievment() {
+    setAchievementError(false);
     removeAchievement(selectedAchievment);
   }
 
@@ -152,7 +153,7 @@ const AchievementInfo: React.FC<PropsFromRedux> = ({
                   isValid={item.achievement_date.isValid}
                   handleChange={handleChange}
                   section={item.achievement_date.section_name}
-                  placeholder={item.achievement_date.placeholder}
+                  placeholder={""}
                   type="date"
                 />
               </div>
@@ -166,7 +167,7 @@ const AchievementInfo: React.FC<PropsFromRedux> = ({
             onClick={handleAddAchievment}
             className="block text-blue-500 text-xs mb-2"
           >
-            + add another achievment
+            + add another achievement
           </button>
         ) : undefined}
         {selectedAchievment != 0 ? (
@@ -182,15 +183,19 @@ const AchievementInfo: React.FC<PropsFromRedux> = ({
       <div className="mt-6">
         <ReCAPTCHA
           sitekey="6LdZjGEpAAAAALpXo_AZOnvnGfDvVqX4lJBDYW5U"
-          onChange={(token) =>
-            token !== null ? setCaptchaToken(token) : undefined
-          }
+          onChange={(token) => {
+            if (token === null) {
+              setCaptchaToken("");
+            } else {
+              setCaptchaToken(token);
+            }
+          }}
           className="g-recaptcha"
         />
       </div>
-      <div className="flex gap-2 justify-between">
+      <div className="flex justify-between items-center">
         <Button
-          name={width >= 768 ? "edit to instruments" : "to instruments"}
+          name={width >= 768 ? "edit instruments" : "to instruments"}
           direction="back"
           handleClick={handleClick}
           enabled={true}

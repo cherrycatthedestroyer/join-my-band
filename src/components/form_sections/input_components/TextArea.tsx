@@ -4,6 +4,7 @@ import {
   invalidInputStyling,
   convertToLowerCamelCase,
 } from "../../../../scripts/helper";
+import { TextField } from "@mui/material";
 
 const TextArea: React.FC<{
   title: string;
@@ -17,18 +18,19 @@ const TextArea: React.FC<{
   ) => void;
 }> = ({ title, name, value, isValid, handleChange, section, placeholder }) => {
   return (
-    <div>
-      <label className={labelStyling}>{convertToLowerCamelCase(title)}</label>
-      <textarea
-        name={name}
-        value={value}
-        onChange={(e) => handleChange(e)}
-        cols={10}
-        rows={3}
-        className={isValid ? inputStyling : invalidInputStyling}
-        placeholder={placeholder}
-      />
-    </div>
+    <TextField
+      name={name}
+      value={value}
+      onChange={(e) => handleChange(e)}
+      className={inputStyling}
+      id="outlined-multiline-flexible"
+      margin="normal"
+      label={title}
+      multiline
+      error={isValid ? false : true}
+      maxRows={3}
+      placeholder={placeholder}
+    />
   );
 };
 

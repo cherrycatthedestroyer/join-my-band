@@ -5,6 +5,8 @@ import {
   invalidInputStyling,
   convertToLowerCamelCase,
 } from "../../../../scripts/helper";
+import { Autocomplete } from "@mui/material";
+import { TextField } from "@mui/material";
 
 const Select: React.FC<{
   title: string;
@@ -14,10 +16,10 @@ const Select: React.FC<{
   isValid: boolean;
   section: string;
   handleChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement>,
     section: string
   ) => void;
-  children: ReactNode;
+  options: string[];
 }> = ({
   title,
   name,
@@ -26,19 +28,26 @@ const Select: React.FC<{
   isValid,
   handleChange,
   section,
-  children,
+  options,
 }) => {
   return (
     <div>
-      <label className={labelStyling}>{convertToLowerCamelCase(title)}</label>
-      <select
-        name={name}
-        value={value}
-        onChange={(e) => handleChange(e, section)}
-        className={isValid ? inputStyling : invalidInputStyling}
-      >
-        {children}
-      </select>
+      <Autocomplete
+        disablePortal
+        id={name}
+        options={options}
+        value={value as string}
+        renderInput={(params) => (
+          <TextField
+            margin="normal"
+            className={inputStyling}
+            name={name}
+            label={convertToLowerCamelCase(title)}
+            error={isValid ? false : true}
+            {...params}
+          />
+        )}
+      />
     </div>
   );
 };

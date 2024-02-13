@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
+import { getCurrentDate } from "../scripts/helper";
 
 export interface TextInputProperties {
   [index: string]: string | boolean;
@@ -132,7 +133,7 @@ const initialState: stateStructure = {
       },
       achievement_date: {
         name: "achievement_date",
-        value: "",
+        value: getCurrentDate(),
         isValid: true,
         placeholder: "Select the date of completion",
         section_name: "achievements",

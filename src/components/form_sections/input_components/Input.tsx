@@ -4,6 +4,7 @@ import {
   invalidInputStyling,
   labelStyling,
 } from "../../../../scripts/helper";
+import { TextField } from "@mui/material";
 
 const Input: React.FC<{
   title: string;
@@ -29,19 +30,22 @@ const Input: React.FC<{
   placeholder,
 }) => {
   return (
-    <div>
-      <label className={labelStyling}>{convertToLowerCamelCase(title)}</label>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={(e) => handleChange(e)}
-        className={isValid ? inputStyling : invalidInputStyling}
-        placeholder={placeholder}
-        maxLength={20}
-      />
-    </div>
+    <TextField
+      id="outlined-basic"
+      label={convertToLowerCamelCase(title)}
+      variant="outlined"
+      type={type}
+      className={inputStyling}
+      margin="normal"
+      name={name}
+      value={value}
+      onChange={(e) => handleChange(e)}
+      maxRows={1}
+      error={isValid ? false : true}
+    />
   );
 };
 
 export default Input;
+
+//<label className={labelStyling}>{convertToLowerCamelCase(title)}</label>

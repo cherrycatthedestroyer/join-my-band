@@ -70,13 +70,35 @@ const SubmitButton: React.FC<Props> = ({
     }
   }
 
+  function isDisabled() {
+    let disabled = false;
+    if (captchaToken === "") {
+      disabled = true;
+    }
+    if (
+      stateList.achievements[0].achievement_name.value.trim().length > 0 ||
+      stateList.achievements[0].achievement_description.value.trim().length > 0
+    ) {
+      stateList.achievements.map((item) => {
+        if (
+          item.achievement_name.value.trim().length <= 0 ||
+          item.achievement_description.value.trim().length <= 0 ||
+          item.achievement_date.value === ""
+        ) {
+          disabled = true;
+        }
+      });
+    }
+    return disabled;
+  }
+
   return (
     <button
       type="submit"
       className={
-        captchaToken !== "" ? submitButtonStyling : submitButtonInactiveStyling
+        !isDisabled() ? submitButtonStyling : submitButtonInactiveStyling
       }
-      disabled={captchaToken !== "" ? false : true}
+      disabled={isDisabled() ? true : false}
       onClick={validateForm}
     >
       Submit

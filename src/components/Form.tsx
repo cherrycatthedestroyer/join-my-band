@@ -7,6 +7,8 @@ import PersonalInfo from "@/components/form_sections/PersonalInfo";
 import useWindowDimensions from "../../scripts/helper";
 import { useSession, signIn, signOut } from "next-auth/react";
 
+import { connectToDatabase } from "../../scripts/mongodb";
+
 const formHeader =
   "uppercase text-xs font-normal text-stone-700 mb-4 shrink-0 xl:text-base";
 const formHeaderInactive =
@@ -121,11 +123,9 @@ const Form: React.FC<PropsFromRedux> = ({
                         }
                       >
                         3. Achievements
-                        {width > 1024 && (
-                          <sup className="ml-1 text-xs text-stone-500 font-light lowercase align-text-top">
-                            optional
-                          </sup>
-                        )}
+                        <sup className="ml-1 text-xs text-stone-500 font-light lowercase align-text-top">
+                          optional
+                        </sup>
                       </h1>
                     ) : undefined}
                   </div>

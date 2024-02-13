@@ -3,8 +3,7 @@ export function convertToLowerCamelCase(str: string) {
   return words.join(" ");
 }
 
-export const inputStyling =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-stone-400 mb-4";
+export const inputStyling = "rounded w-full leading-tight";
 export const labelStyling = "block text-stone-500 text-xs font-bold mb-2";
 export const invalidInputStyling =
   "shadow appearance-none border-2 border-rose-600 rounded w-full py-2 px-3 text-gray-700 leading-tight mb-2";
@@ -51,6 +50,22 @@ export default function useWindowDimensions() {
   }, []);
 
   return windowDimensions;
+}
+
+export function getCurrentDate(): string {
+  const date: Date = new Date();
+  const year: number = date.getFullYear();
+  const month: number = date.getMonth() + 1;
+  const day: number = date.getDate();
+
+  // Pad single digit month/day with leading zero if necessary
+  const formattedMonth: string = month < 10 ? `0${month}` : `${month}`;
+  const formattedDay: string = day < 10 ? `0${day}` : `${day}`;
+
+  // Construct the date string in yyyy-MM-dd format
+  const formattedDate: string = `${year}-${formattedMonth}-${formattedDay}`;
+
+  return formattedDate;
 }
 
 function totalSkills(stateObject: Submission) {

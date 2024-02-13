@@ -24,6 +24,16 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
   const selectedInstrument = stateList.selected_instrument;
   const { width } = useWindowDimensions();
 
+  function instrumentsFilled() {
+    let isFilled = true;
+    instruments.map((item, index) => {
+      if (item.instrument_name.value.trim().length <= 0) {
+        isFilled = false;
+      }
+    });
+    return isFilled;
+  }
+
   function handleAddInstrument() {
     if (
       instruments[selectedInstrument].instrument_name.value.trim().length < 2
@@ -59,6 +69,7 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
   }
 
   function handleRemoveInstrument() {
+    setInstrumentError(false);
     removeInstrument(selectedInstrument);
   }
 
@@ -141,11 +152,8 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
                       handleChange={handleChange}
                       section={item.instrument_profeciency.section_name}
                       type="number"
-                    >
-                      <option value="Novice">Novice</option>
-                      <option value="Intermediate">Intermediate</option>
-                      <option value="Advanced">Advanced</option>
-                    </Select>
+                      options={["Novice", "Intermediate", "Advanced"]}
+                    />
                   </div>
                   <div className="w-1/2">
                     <Select
@@ -156,11 +164,8 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
                       handleChange={handleChange}
                       section={item.instrument_experience.section_name}
                       type="number"
-                    >
-                      <option value="Casual">Casual</option>
-                      <option value="Part-time">Part-time</option>
-                      <option value="Full-time">Full-time</option>
-                    </Select>
+                      options={["Casual", "Part-Time", "Full-Time"]}
+                    />
                   </div>
                 </div>
               </div>
@@ -198,11 +203,7 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
           name={width >= 768 ? "continue to achievements" : "to achievements"}
           direction="next"
           handleClick={handleClickForward}
-          enabled={
-            stateList.instruments[0].instrument_name.value.trim().length > 0
-              ? true
-              : false
-          }
+          enabled={instrumentsFilled() ? true : false}
         />
       </div>
     </>

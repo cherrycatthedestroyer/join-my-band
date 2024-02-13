@@ -40,7 +40,6 @@ const PersonalInfo: React.FC<PropsFromRedux> = ({
         placeholder={stateList.personal.performer_name.placeholder}
         type="text"
       />
-
       <div className="flex gap-x-10">
         <Input
           title={stateList.personal.age.name}
@@ -61,11 +60,8 @@ const PersonalInfo: React.FC<PropsFromRedux> = ({
             handleChange={handleChange}
             section={stateList.personal.transport.section_name}
             type="number"
-          >
-            <option value="Car">Car</option>
-            <option value="Train">Train</option>
-            <option value="Taxi">Taxi</option>
-          </Select>
+            options={["Car", "Train", "Taxi"]}
+          />
         </div>
       </div>
       <div>
@@ -87,7 +83,8 @@ const PersonalInfo: React.FC<PropsFromRedux> = ({
           handleClick={handleClick}
           enabled={
             stateList.personal.performer_name.value.trim().length > 0 &&
-            stateList.personal.contact.value.trim().length > 0
+            stateList.personal.contact.value.trim().length > 0 &&
+            stateList.personal.transport.value.trim().length > 0
               ? true
               : false
           }

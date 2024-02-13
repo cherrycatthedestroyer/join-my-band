@@ -16,3 +16,5 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
 };
 
 export default Layout;
+
+//mongodb+srv://admin-josh:<password>@cluster0.phbt6ze.mongodb.net/?retryWrites=true&w=majority
