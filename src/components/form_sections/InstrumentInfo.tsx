@@ -5,6 +5,7 @@ import { mapDispatchToProps, mapStateToProps } from "../../../store/actions";
 import useWindowDimensions, {
   buttonStyling,
   activeButtonStyling,
+  instrumentTypes,
 } from "../../../scripts/helper";
 import Button from "./input_components/Button";
 
@@ -132,15 +133,15 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
           (item, index) =>
             selectedInstrument === index && (
               <div key={index}>
-                <Input
-                  title={item.instrument_name.name}
-                  name={item.instrument_name.name}
-                  value={item.instrument_name.value}
-                  isValid={item.instrument_name.isValid}
+                <Select
+                  title={item.instrument_profeciency.name}
+                  name={item.instrument_profeciency.name}
+                  value={item.instrument_profeciency.value}
+                  isValid={item.instrument_profeciency.isValid}
                   handleChange={handleChange}
-                  section={item.instrument_name.section_name}
-                  placeholder={item.instrument_name.placeholder}
-                  type="text"
+                  section={item.instrument_profeciency.section_name}
+                  type="number"
+                  options={instrumentTypes}
                 />
                 <div className="flex justify-between w-full gap-x-10">
                   <div className="w-1/2">

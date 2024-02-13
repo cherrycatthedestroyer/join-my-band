@@ -1,8 +1,5 @@
-import { ReactNode } from "react";
 import {
-  labelStyling,
   inputStyling,
-  invalidInputStyling,
   convertToLowerCamelCase,
 } from "../../../../scripts/helper";
 import { Autocomplete } from "@mui/material";
@@ -20,16 +17,7 @@ const Select: React.FC<{
     section: string
   ) => void;
   options: string[];
-}> = ({
-  title,
-  name,
-  value,
-  type,
-  isValid,
-  handleChange,
-  section,
-  options,
-}) => {
+}> = ({ title, name, value, isValid, options }) => {
   return (
     <div>
       <Autocomplete
