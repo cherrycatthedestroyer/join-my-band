@@ -134,12 +134,12 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
             selectedInstrument === index && (
               <div key={index}>
                 <Select
-                  title={item.instrument_profeciency.name}
-                  name={item.instrument_profeciency.name}
-                  value={item.instrument_profeciency.value}
-                  isValid={item.instrument_profeciency.isValid}
+                  title={item.instrument_name.name}
+                  name={item.instrument_name.name}
+                  value={item.instrument_name.value}
+                  isValid={item.instrument_name.isValid}
                   handleChange={handleChange}
-                  section={item.instrument_profeciency.section_name}
+                  section={item.instrument_name.section_name}
                   type="number"
                   options={instrumentTypes}
                 />
