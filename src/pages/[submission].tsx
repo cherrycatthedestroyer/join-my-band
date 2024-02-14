@@ -29,7 +29,7 @@ const Submission: React.FC<PropsFromRedux> = ({
         className="hover:text-white text-stone-700 text-xs py-2 px-1 rounded self-start"
         onClick={routeToHome}
       >
-        return home
+        return to submissions
       </button>
       {submission.map((item, item_index) =>
         item_index === clientState.selectedSubmission ? (

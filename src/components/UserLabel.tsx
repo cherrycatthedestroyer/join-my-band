@@ -22,7 +22,7 @@ const UserLabel: React.FC<PropsFromRedux> = () => {
   }
   return (
     <button
-      className={`block text-stone-700 text-xs rounded${
+      className={`block text-stone-700 text-xs mt-4 mr-4 ml-auto rounded${
         status !== "authenticated" ? "" : "hover:text-white"
       }`}
       onClick={status !== "authenticated" ? undefined : handleCancel}

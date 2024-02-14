@@ -40,11 +40,11 @@ const PerformerCard: React.FC<ItemProps> = ({
       key={item_index}
       onClick={() => routeToSubmissionPage(item.personal.performer_name.value)}
     >
-      <div className="mt-4 bg-white shadow-md rounded mb-2 shrink-0 flex cursor-pointer hover:bg-stone-100">
+      <div className="mt-4 bg-white shadow-md rounded mb-2 flex cursor-pointer hover:bg-stone-100">
         <img
           src="/test-profile.jpg"
           alt="test-picture"
-          className="rounded-l w-2/5 object-normal object-cover"
+          className="rounded-l w-2/5"
         />
         <div className="flex flex-col p-4">
           <h2 className="text-stone-700 text-base font-semibold mb-2 lg:text-2xl xl:text-4xl xl:mb-4">

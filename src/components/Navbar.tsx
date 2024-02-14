@@ -3,7 +3,7 @@ import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
 
-const NavBar: React.FC<PropsFromRedux> = ({ stateList, setSelectedPage }) => {
+const NavBar: React.FC<PropsFromRedux> = () => {
   const pathname = usePathname();
   const router = useRouter();
   function routeToSubmissionsPage() {
@@ -11,6 +11,9 @@ const NavBar: React.FC<PropsFromRedux> = ({ stateList, setSelectedPage }) => {
   }
   function routeToHomePage() {
     router.push("/");
+  }
+  function routeToAbout() {
+    router.push("/about");
   }
   return (
     <nav className="flex gap-4 p-4 mb-8">
@@ -31,8 +34,9 @@ const NavBar: React.FC<PropsFromRedux> = ({ stateList, setSelectedPage }) => {
         Submissions
       </button>
       <button
+        onClick={routeToAbout}
         className={`block text-s pb-2 pl-1 rounded self-start hover:text-white ${
-          stateList.selected_page === "about" ? "text-white" : "text-stone-700"
+          pathname === "/about" ? "text-white" : "text-stone-700"
         }`}
       >
         About
