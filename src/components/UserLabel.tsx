@@ -21,18 +21,16 @@ const UserLabel: React.FC<PropsFromRedux> = () => {
     signOut();
   }
   return (
-    <Container>
-      <button
-        className={`block text-stone-700 text-xs rounded${
-          status !== "authenticated" ? "" : "hover:text-white"
-        }`}
-        onClick={status !== "authenticated" ? undefined : handleCancel}
-      >
-        {status !== "authenticated"
-          ? "anonymous " + nickname
-          : "sign out " + session?.user?.email}
-      </button>
-    </Container>
+    <button
+      className={`block text-stone-700 text-xs rounded${
+        status !== "authenticated" ? "" : "hover:text-white"
+      }`}
+      onClick={status !== "authenticated" ? undefined : handleCancel}
+    >
+      {status !== "authenticated"
+        ? "anonymous " + nickname
+        : "sign out " + session?.user?.email}
+    </button>
   );
 };
 

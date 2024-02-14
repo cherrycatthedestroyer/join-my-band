@@ -23,7 +23,7 @@ const Submission: React.FC<PropsFromRedux> = ({
   }
 
   return (
-    <Container className="w-4/5 self-center md:w-1/2">
+    <div className="w-4/5 self-center md:w-1/2">
       <button
         type="submit"
         className="hover:text-white text-stone-700 text-xs py-2 px-1 rounded self-start"
@@ -146,7 +146,7 @@ const Submission: React.FC<PropsFromRedux> = ({
           </div>
         ) : undefined
       )}
-    </Container>
+    </div>
   );
 };
 // Connect the component to the Redux store

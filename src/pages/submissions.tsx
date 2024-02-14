@@ -20,7 +20,7 @@ const Submissions: React.FC<PropsFromRedux> = ({
   }, [submission]);
 
   return (
-    <Container className="w-4/5 self-center md:w-1/2">
+    <div className="w-4/5 self-center md:w-1/2">
       <SearchBar subList={subList} setSubList={setSubList} />
       <ul>
         {subList.length > 0 ? (
@@ -39,7 +39,7 @@ const Submissions: React.FC<PropsFromRedux> = ({
           </p>
         )}
       </ul>
-    </Container>
+    </div>
   );
 };
 

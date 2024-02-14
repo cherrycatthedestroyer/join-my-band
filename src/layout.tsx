@@ -5,7 +5,6 @@ import UserLabel from "./components/UserLabel";
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div className="flex flex-col items-center shrink-0 grow-0">
-      <UserLabel />
       <img
         src="/logo.png"
         alt="test-picture"
