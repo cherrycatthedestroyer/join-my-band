@@ -7,6 +7,7 @@ import {
 } from "../../scripts/helper";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { Container } from "@mui/material";
 
 const Submission: React.FC<PropsFromRedux> = ({
   submission,
@@ -22,7 +23,7 @@ const Submission: React.FC<PropsFromRedux> = ({
   }
 
   return (
-    <div className="w-4/5 self-center md:w-1/2">
+    <Container className="w-4/5 self-center md:w-1/2">
       <button
         type="submit"
         className="hover:text-white text-stone-700 text-xs py-2 px-1 rounded self-start"
@@ -145,7 +146,7 @@ const Submission: React.FC<PropsFromRedux> = ({
           </div>
         ) : undefined
       )}
-    </div>
+    </Container>
   );
 };
 // Connect the component to the Redux store

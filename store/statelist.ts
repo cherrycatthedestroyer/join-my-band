@@ -57,6 +57,7 @@ export interface stateStructure {
   error_list: string[];
   form_open: boolean;
   complete: boolean;
+  selected_page: string;
 }
 
 const initialState: stateStructure = {
@@ -151,12 +152,19 @@ const initialState: stateStructure = {
   error_list: [],
   form_open: false,
   complete: false,
+  selected_page: "home",
 };
 
 const statelistSlice = createSlice({
   name: "statelist",
   initialState,
   reducers: {
+    SET_SELECTED_PAGE: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        selected_page: action.payload,
+      };
+    },
     SET_COMPLETE: (state) => {
       return {
         ...state,
@@ -395,6 +403,7 @@ const statelistSlice = createSlice({
 });
 
 export const {
+  SET_SELECTED_PAGE,
   SET_COMPLETE,
   SET_FORM_OPEN,
   SET_ACHIEVEMENT_OPEN,

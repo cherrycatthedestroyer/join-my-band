@@ -155,17 +155,6 @@ const Form: React.FC<PropsFromRedux> = ({
       ) : (
         <>
           <button
-            className={`block text-stone-700 text-xs pb-2 pl-1 rounded self-start ${
-              status !== "authenticated" ? "" : "hover:text-white"
-            }`}
-            onClick={status !== "authenticated" ? undefined : handleCancel}
-          >
-            {status !== "authenticated"
-              ? "anonymous " + nickname
-              : "sign out " + session?.user?.email}
-          </button>
-
-          <button
             type="submit"
             className={
               "bg-stone-700 hover:bg-stone-600 text-white py-8 px-3 rounded w-full"

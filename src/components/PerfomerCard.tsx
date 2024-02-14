@@ -3,6 +3,14 @@ import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 import { Submission } from "../../store/submissions";
 import useWindowDimensions, { cardButtonStyling } from "../../scripts/helper";
 import { useRouter } from "next/router";
+import {
+  Card,
+  CardMedia,
+  Box,
+  CardContent,
+  Typography,
+  Icon,
+} from "@mui/material";
 
 interface ItemProps extends PropsFromRedux {
   item: Submission;

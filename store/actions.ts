@@ -1,5 +1,6 @@
 import { RootState } from "../store/store";
 import {
+  SET_SELECTED_PAGE,
   SET_COMPLETE,
   SET_FORM_OPEN,
   SET_ACHIEVEMENT_OPEN,
@@ -42,6 +43,7 @@ export function mapStateToProps(state: RootState) {
 }
 
 export const mapDispatchToProps = {
+  setSelectedPage: (value: string) => SET_SELECTED_PAGE(value),
   resetFilters: () => RESET_FILTERS(),
   setSkillFilter: (value: boolean) => SET_SKILL_FILTER(value),
   setExpFilter: (value: boolean) => SET_EXP_FILTER(value),
