@@ -6,7 +6,7 @@ import { fetchRandomPokemon } from "../../scripts/helper";
 import { AxiosError } from "axios";
 import { Container } from "@mui/material";
 
-const UserBar: React.FC<PropsFromRedux> = () => {
+const UserLabel: React.FC<PropsFromRedux> = () => {
   const { data: session, status } = useSession();
   const [nickname, setNickname] = useState<string | null>();
 
@@ -43,4 +43,4 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 // Export the connected component
-export default connector(UserBar);
+export default connector(UserLabel);

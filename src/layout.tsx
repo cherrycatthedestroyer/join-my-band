@@ -1,11 +1,11 @@
 import React, { ReactNode } from "react";
 import Navbar from "./components/Navbar";
-import UserBar from "./components/userBar";
+import UserLabel from "./components/UserLabel";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div className="flex flex-col items-center shrink-0 grow-0">
-      <UserBar />
+      <UserLabel />
       <img
         src="/logo.png"
         alt="test-picture"
