@@ -2,6 +2,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
+import { Container } from "@mui/material";
 
 const NavBar: React.FC<PropsFromRedux> = () => {
   const pathname = usePathname();
@@ -16,32 +17,34 @@ const NavBar: React.FC<PropsFromRedux> = () => {
     router.push("/about");
   }
   return (
-    <nav className="flex gap-4 p-4 mb-8">
-      <button
-        onClick={routeToHomePage}
-        className={`block text-s pb-2 pl-1 rounded self-start hover:text-white ${
-          pathname === "/" ? "text-white" : "text-stone-700"
-        }`}
-      >
-        Home
-      </button>
-      <button
-        onClick={routeToSubmissionsPage}
-        className={`block text-s pb-2 pl-1 rounded self-start hover:text-white ${
-          pathname === "/submissions" ? "text-white" : "text-stone-700"
-        }`}
-      >
-        Submissions
-      </button>
-      <button
-        onClick={routeToAbout}
-        className={`block text-s pb-2 pl-1 rounded self-start hover:text-white ${
-          pathname === "/about" ? "text-white" : "text-stone-700"
-        }`}
-      >
-        About
-      </button>
-    </nav>
+    <Container>
+      <nav className="flex gap-4 p-4 justify-center">
+        <button
+          onClick={routeToHomePage}
+          className={`block text-s pb-2 pl-1 rounded self-start hover:text-white ${
+            pathname === "/" ? "text-white" : "text-stone-700"
+          }`}
+        >
+          Home
+        </button>
+        <button
+          onClick={routeToSubmissionsPage}
+          className={`block text-s pb-2 pl-1 rounded self-start hover:text-white ${
+            pathname === "/submissions" ? "text-white" : "text-stone-700"
+          }`}
+        >
+          Submissions
+        </button>
+        <button
+          onClick={routeToAbout}
+          className={`block text-s pb-2 pl-1 rounded self-start hover:text-white ${
+            pathname === "/about" ? "text-white" : "text-stone-700"
+          }`}
+        >
+          About
+        </button>
+      </nav>
+    </Container>
   );
 };
 

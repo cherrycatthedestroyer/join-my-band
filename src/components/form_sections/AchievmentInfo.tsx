@@ -8,7 +8,14 @@ import Button from "./input_components/Button";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import { useState } from "react";
-import useWindowDimensions, { getCurrentDate } from "../../../scripts/helper";
+import useWindowDimensions, {
+  formHeader,
+  formHeaderInactive,
+  getCurrentDate,
+} from "../../../scripts/helper";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const buttonStyling =
   "leading-tight tracking-tighter bg-stone-200 hover:bg-stone-300 text-xs font py-2 px-2 rounded mb-2";
@@ -95,91 +102,120 @@ const AchievementInfo: React.FC<PropsFromRedux> = ({
 
   return (
     <>
-      <div className="flex gap-2">
-        {achievments.length > 1
-          ? achievments.map((achievement, index) => (
+      <Accordion
+        elevation={0}
+        sx={{
+          "&:before": {
+            display: "none",
+          },
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          id="panel1-header"
+          sx={{ p: 0, m: 0 }}
+        >
+          {width >= 768 || (width < 768 && stateList.achievement_isOpen) ? (
+            <h1
+              className={
+                stateList.achievement_isOpen ? formHeader : formHeaderInactive
+              }
+            >
+              3. Achievements
+              <sup className="ml-1 text-xs text-stone-500 font-light lowercase align-text-top">
+                optional
+              </sup>
+            </h1>
+          ) : undefined}
+        </AccordionSummary>
+        <AccordionDetails sx={{ p: 0 }}>
+          <div className="flex gap-2">
+            {achievments.length > 1
+              ? achievments.map((achievement, index) => (
+                  <button
+                    onClick={() => handleSelectAchievment(index)}
+                    key={index}
+                    type="button"
+                    className={
+                      index === selectedAchievment
+                        ? activeButtonStyling
+                        : buttonStyling
+                    }
+                  >
+                    {achievement.achievement_name.value.trim().length > 0
+                      ? achievement.achievement_name.value
+                      : achievments.length > 1
+                      ? "Achievment " + (index + 1)
+                      : "Achievment"}
+                  </button>
+                ))
+              : undefined}
+          </div>
+          {isError ? (
+            <p className="block text-red-500 text-xs mb-2">
+              complete this section before adding another
+            </p>
+          ) : undefined}
+          <div>
+            {achievments.map(
+              (item, index) =>
+                selectedAchievment === index && (
+                  <div key={index}>
+                    <Input
+                      title={item.achievement_name.name}
+                      name={item.achievement_name.name}
+                      value={item.achievement_name.value}
+                      isValid={item.achievement_name.isValid}
+                      handleChange={handleChange}
+                      section={item.achievement_name.section_name}
+                      placeholder={item.achievement_name.placeholder}
+                      type="text"
+                    />
+                    <TextArea
+                      title={item.achievement_description.name}
+                      name={item.achievement_description.name}
+                      value={item.achievement_description.value}
+                      isValid={item.achievement_description.isValid}
+                      handleChange={handleChange}
+                      section={item.achievement_description.section_name}
+                      placeholder={item.achievement_description.placeholder}
+                    />
+                    <Input
+                      title={item.achievement_date.name}
+                      name={item.achievement_date.name}
+                      value={item.achievement_date.value}
+                      isValid={item.achievement_date.isValid}
+                      handleChange={handleChange}
+                      section={item.achievement_date.section_name}
+                      placeholder={""}
+                      type="date"
+                    />
+                  </div>
+                )
+            )}
+          </div>
+          <div className="flex justify-between">
+            {achievments.length < 3 ? (
               <button
-                onClick={() => handleSelectAchievment(index)}
-                key={index}
                 type="button"
-                className={
-                  index === selectedAchievment
-                    ? activeButtonStyling
-                    : buttonStyling
-                }
+                onClick={handleAddAchievment}
+                className="block text-blue-500 text-xs mb-2"
               >
-                {achievement.achievement_name.value.trim().length > 0
-                  ? achievement.achievement_name.value
-                  : achievments.length > 1
-                  ? "Achievment " + (index + 1)
-                  : "Achievment"}
+                + add another achievement
               </button>
-            ))
-          : undefined}
-      </div>
-      {isError ? (
-        <p className="block text-red-500 text-xs mb-2">
-          complete this section before adding another
-        </p>
-      ) : undefined}
-      <div>
-        {achievments.map(
-          (item, index) =>
-            selectedAchievment === index && (
-              <div key={index}>
-                <Input
-                  title={item.achievement_name.name}
-                  name={item.achievement_name.name}
-                  value={item.achievement_name.value}
-                  isValid={item.achievement_name.isValid}
-                  handleChange={handleChange}
-                  section={item.achievement_name.section_name}
-                  placeholder={item.achievement_name.placeholder}
-                  type="text"
-                />
-                <TextArea
-                  title={item.achievement_description.name}
-                  name={item.achievement_description.name}
-                  value={item.achievement_description.value}
-                  isValid={item.achievement_description.isValid}
-                  handleChange={handleChange}
-                  section={item.achievement_description.section_name}
-                  placeholder={item.achievement_description.placeholder}
-                />
-                <Input
-                  title={item.achievement_date.name}
-                  name={item.achievement_date.name}
-                  value={item.achievement_date.value}
-                  isValid={item.achievement_date.isValid}
-                  handleChange={handleChange}
-                  section={item.achievement_date.section_name}
-                  placeholder={""}
-                  type="date"
-                />
-              </div>
-            )
-        )}
-      </div>
-      <div className="flex justify-between">
-        {achievments.length < 3 ? (
-          <button
-            type="button"
-            onClick={handleAddAchievment}
-            className="block text-blue-500 text-xs mb-2"
-          >
-            + add another achievement
-          </button>
-        ) : undefined}
-        {selectedAchievment != 0 ? (
-          <button
-            type="button"
-            onClick={handleRemoveAchievment}
-            className="block text-red-500 text-xs mb-2"
-          >
-            remove
-          </button>
-        ) : undefined}
-      </div>
+            ) : undefined}
+            {selectedAchievment != 0 ? (
+              <button
+                type="button"
+                onClick={handleRemoveAchievment}
+                className="block text-red-500 text-xs mb-2"
+              >
+                remove
+              </button>
+            ) : undefined}
+          </div>
+        </AccordionDetails>
+      </Accordion>
       <div className="mt-6">
         <ReCAPTCHA
           sitekey="6LdZjGEpAAAAALpXo_AZOnvnGfDvVqX4lJBDYW5U"

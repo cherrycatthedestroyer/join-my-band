@@ -1,10 +1,11 @@
 import React, { ReactNode } from "react";
 import Navbar from "./components/Navbar";
 import UserLabel from "./components/UserLabel";
+import { Container } from "@mui/material";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className="flex flex-col items-center noscroll">
+    <Container className="flex flex-col items-center">
       <UserLabel />
       <img
         src="/logo.png"
@@ -15,7 +16,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       />
       <Navbar />
       {children}
-    </div>
+    </Container>
   );
 };
 

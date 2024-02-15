@@ -11,6 +11,7 @@ import {
 } from "../../scripts/helper";
 import { SetStateAction, useRef } from "react";
 import { Submission } from "../../store/submissions";
+import { Container } from "@mui/material";
 
 interface SearchBarProps extends PropsFromRedux {
   subList: Submission[];
@@ -75,7 +76,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     setSubList(submission);
   }
   return (
-    <>
+    <Container disableGutters>
       <div className="flex shadow mb-4 border rounded">
         <input
           type="text"
@@ -127,7 +128,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           Achievements
         </button>
       </div>
-    </>
+    </Container>
   );
 };
 

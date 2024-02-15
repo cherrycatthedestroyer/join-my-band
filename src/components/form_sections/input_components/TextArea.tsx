@@ -1,9 +1,4 @@
-import {
-  labelStyling,
-  inputStyling,
-  invalidInputStyling,
-  convertToLowerCamelCase,
-} from "../../../../scripts/helper";
+import { inputStyling } from "../../../../scripts/helper";
 import { TextField } from "@mui/material";
 
 const TextArea: React.FC<{

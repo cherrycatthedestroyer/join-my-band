@@ -40,6 +40,7 @@ export interface Personal {
   age: NumberInputProperties;
   transport: TextInputProperties;
   contact: TextInputProperties;
+  image: TextInputProperties;
 }
 
 export interface stateStructure {
@@ -88,6 +89,13 @@ const initialState: stateStructure = {
       value: "",
       isValid: true,
       placeholder: "Enter an email or phone number",
+      section_name: "personal",
+    },
+    image: {
+      name: "image",
+      value: "",
+      isValid: true,
+      placeholder: "Apply with profile picture",
       section_name: "personal",
     },
   },

@@ -18,16 +18,16 @@ const Submission: React.FC<PropsFromRedux> = ({
   useEffect(() => {
     setSelectedAchievementSub(0);
   }, [submission]);
-  function routeToHome() {
-    router.push("/");
+  function routeToSubmissions() {
+    router.push("/submissions");
   }
 
   return (
-    <Container maxWidth="sm" className="w-4/5 self-center md:w-1/2">
+    <Container maxWidth="md" className="self-center">
       <button
-        type="submit"
+        type="button"
         className="hover:text-white text-stone-700 text-xs py-2 px-1 rounded self-start"
-        onClick={routeToHome}
+        onClick={routeToSubmissions}
       >
         return to submissions
       </button>
@@ -38,7 +38,11 @@ const Submission: React.FC<PropsFromRedux> = ({
             key={item_index}
           >
             <img
-              src="/test-profile.jpg"
+              src={
+                item.personal.image.value != ""
+                  ? item.personal.image.value
+                  : "/test-profile.png"
+              }
               alt="test-picture"
               className="rounded-l xl:w-1/2 xl:object-normal object-cover"
             />

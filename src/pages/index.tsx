@@ -2,11 +2,11 @@ import Form from "@/components/Form";
 
 import { connect, ConnectedProps } from "react-redux";
 import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
-import { Container } from "@mui/material";
+import { Box, Button, Container, Modal } from "@mui/material";
 
 const Home: React.FC<PropsFromRedux> = () => {
   return (
-    <Container maxWidth="sm" className="w-4/5 self-center md:w-1/2">
+    <Container maxWidth="sm" className="self-center">
       <Form />
     </Container>
   );

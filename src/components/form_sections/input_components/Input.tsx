@@ -1,8 +1,6 @@
 import {
   convertToLowerCamelCase,
   inputStyling,
-  invalidInputStyling,
-  labelStyling,
 } from "../../../../scripts/helper";
 import { TextField } from "@mui/material";
 
@@ -19,16 +17,7 @@ const Input: React.FC<{
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => void;
-}> = ({
-  title,
-  name,
-  value,
-  type,
-  isValid,
-  handleChange,
-  section,
-  placeholder,
-}) => {
+}> = ({ title, name, value, type, isValid, handleChange }) => {
   return (
     <TextField
       id="outlined-basic"

@@ -1,12 +1,24 @@
 import React, { ChangeEvent, DOMElement, FormEvent, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
-import { buttonStyling } from "../../../../scripts/helper";
+import { buttonStyling, cropButtonStyling } from "../../../../scripts/helper";
 
 interface CropperProps {
   image: string;
   onCropDone: (area: Area) => void;
   onCropCancel: () => void;
 }
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 300,
+  height: 300,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+};
 
 const ImageCropper: React.FC<CropperProps> = ({
   image,
@@ -21,7 +33,7 @@ const ImageCropper: React.FC<CropperProps> = ({
     x: 0,
     y: 0,
   });
-  const [aspectRatio, setAspectRatio] = useState(4 / 3);
+  const [aspectRatio, setAspectRatio] = useState(1 / 1);
 
   const onCropComplete = (
     croppedAreaPercentage: Area,
@@ -43,23 +55,34 @@ const ImageCropper: React.FC<CropperProps> = ({
           onCropComplete={onCropComplete}
           style={{
             containerStyle: {
-              marginLeft: "auto",
-              marginRight: "auto",
-              height: "50%",
+              width: "100%",
+              height: "80%",
               backgroundColor: "#fff",
-              display: "flex",
-              justifyContent: "center",
+              borderRadius: "0px, 0px, 10px, 10px",
             },
           }}
         />
       </div>
-      <div className="absolute">
+      <div
+        style={{
+          display: "flex",
+          gap: 4,
+          position: "absolute",
+          justifyContent: "between",
+          alignItems: "center",
+          top: "85%",
+          left: "0%",
+        }}
+      >
+        <p className="block text-stone-500 text-xs ml-4 mr-20 mb-2">
+          crop your image
+        </p>
         <button type="button" className={buttonStyling} onClick={onCropCancel}>
           Cancel
         </button>
 
         <button
-          className={buttonStyling}
+          className={cropButtonStyling}
           type="button"
           onClick={() => {
             onCropDone(croppedArea);

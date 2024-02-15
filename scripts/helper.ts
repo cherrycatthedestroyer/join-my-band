@@ -11,6 +11,8 @@ export const invalidInputStyling =
   "shadow appearance-none border-2 border-rose-600 rounded w-full py-2 px-3 text-gray-700 leading-tight mb-2";
 export const buttonStyling =
   "leading-tight tracking-tighter bg-stone-200 hover:bg-stone-300 text-xs font py-2 px-2 rounded mb-2";
+export const cropButtonStyling =
+  "leading-tight tracking-tighter bg-stone-700 hover:bg-stone-600 text-white text-xs font py-2 px-2 rounded mb-2";
 export const activeButtonStyling =
   "leading-tight tracking-tighter bg-stone-300 text-xs font py-2 px-2 rounded mb-2";
 export const submissionButtonStyling =
@@ -31,9 +33,17 @@ export const filterButtonSelectedStyle =
   "bg-stone-200 text-xs text-stone-700 font py-2 px-2 rounded mb-2";
 export const cardButtonStyling =
   "leading-tight tracking-tighter bg-stone-200 text-xs font py-2 px-2 rounded mb-2";
+export const formHeader =
+  "uppercase text-xs font-normal text-stone-700 mb-4 shrink-0 xl:text-base";
+export const formHeaderInactive =
+  "uppercase text-xs font-normal text-stone-400 mb-4 shrink-0 xl:text-base";
 
 import { useState, useEffect } from "react";
 import { Submission } from "../store/submissions";
+
+export function evenlyDivides(dividend: number, divisor: number) {
+  return Math.ceil(dividend / divisor);
+}
 
 export default function useWindowDimensions() {
   const [windowDimensions, setWindowDimensions] = useState({

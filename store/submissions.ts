@@ -39,6 +39,13 @@ const initialState: Submission[] = [
         placeholder: "Enter an email or phone number",
         section_name: "personal",
       },
+      image: {
+        name: "image",
+        value: "",
+        isValid: true,
+        placeholder: "Apply with profile picture",
+        section_name: "personal",
+      },
     },
     instruments: [
       {
@@ -120,6 +127,13 @@ const initialState: Submission[] = [
         value: "josh96j@gmail.com",
         isValid: true,
         placeholder: "Enter an email or phone number",
+        section_name: "personal",
+      },
+      image: {
+        name: "image",
+        value: "",
+        isValid: true,
+        placeholder: "Apply with profile picture",
         section_name: "personal",
       },
     },
@@ -254,6 +268,13 @@ const initialState: Submission[] = [
         placeholder: "Enter an email or phone number",
         section_name: "personal",
       },
+      image: {
+        name: "image",
+        value: "",
+        isValid: true,
+        placeholder: "Apply with profile picture",
+        section_name: "personal",
+      },
     },
     instruments: [
       {
@@ -335,6 +356,13 @@ const initialState: Submission[] = [
         value: "vyonce@gmail.com",
         isValid: true,
         placeholder: "Enter an email or phone number",
+        section_name: "personal",
+      },
+      image: {
+        name: "image",
+        value: "",
+        isValid: true,
+        placeholder: "Apply with profile picture",
         section_name: "personal",
       },
     },

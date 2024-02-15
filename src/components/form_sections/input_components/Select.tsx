@@ -1,32 +1,35 @@
+import { Autocomplete, TextField } from "@mui/material";
 import {
-  inputStyling,
   convertToLowerCamelCase,
+  inputStyling,
 } from "../../../../scripts/helper";
-import { Autocomplete } from "@mui/material";
-import { TextField } from "@mui/material";
 
 const Select: React.FC<{
   title: string;
   name: string;
-  value: string | number;
+  value: string;
   type: string;
   isValid: boolean;
   section: string;
-  handleChange: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    section: string
-  ) => void;
+  handleChange: (value: string, name: string) => void;
   options: string[];
-}> = ({ title, name, value, isValid, options }) => {
+}> = ({ title, name, value, isValid, options, handleChange, section }) => {
+  function handleOnChange(value: string | null) {
+    if (value !== null) {
+      handleChange(value, name);
+    }
+  }
   return (
     <div>
       <Autocomplete
         disablePortal
         id={name}
         options={options}
-        value={value as string}
+        value={value}
+        onChange={(_, value) => handleOnChange(value)}
         renderInput={(params) => (
           <TextField
+            type="text"
             margin="normal"
             className={inputStyling}
             name={name}

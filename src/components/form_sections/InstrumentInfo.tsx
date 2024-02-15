@@ -6,6 +6,8 @@ import useWindowDimensions, {
   buttonStyling,
   activeButtonStyling,
   instrumentTypes,
+  formHeader,
+  formHeaderInactive,
 } from "../../../scripts/helper";
 import Button from "./input_components/Button";
 
@@ -79,13 +81,7 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
     setSelectedInstrument(itemIndex);
   }
 
-  function handleChange(
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) {
-    const value = event.currentTarget.value;
-    const name = event.currentTarget.name;
+  function handleChange(value: string, name: string) {
     setInputInstrument(value, name, selectedInstrument);
   }
 
@@ -101,6 +97,15 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
 
   return (
     <>
+      {width >= 768 || (width < 768 && stateList.instrument_isOpen) ? (
+        <h1
+          className={
+            stateList.instrument_isOpen ? formHeader : formHeaderInactive
+          }
+        >
+          2. Instruments
+        </h1>
+      ) : undefined}
       <div className="flex gap-2">
         {instruments.length > 1
           ? instruments.map((_, index) => (
@@ -140,7 +145,7 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
                   isValid={item.instrument_name.isValid}
                   handleChange={handleChange}
                   section={item.instrument_name.section_name}
-                  type="number"
+                  type="text"
                   options={instrumentTypes}
                 />
                 <div className="flex justify-between w-full gap-x-10">
@@ -152,7 +157,7 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
                       isValid={item.instrument_profeciency.isValid}
                       handleChange={handleChange}
                       section={item.instrument_profeciency.section_name}
-                      type="number"
+                      type="text"
                       options={["Novice", "Intermediate", "Advanced"]}
                     />
                   </div>
@@ -164,7 +169,7 @@ const InstrumentInfo: React.FC<PropsFromRedux> = ({
                       isValid={item.instrument_experience.isValid}
                       handleChange={handleChange}
                       section={item.instrument_experience.section_name}
-                      type="number"
+                      type="text"
                       options={["Casual", "Part-Time", "Full-Time"]}
                     />
                   </div>

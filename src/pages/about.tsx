@@ -1,11 +1,10 @@
-import Form from "@/components/Form";
 import { connect, ConnectedProps } from "react-redux";
 import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 import { Container } from "@mui/material";
 
 const About: React.FC<PropsFromRedux> = () => {
   return (
-    <Container maxWidth="sm" className="w-4/5 self-center md:w-1/2">
+    <Container maxWidth="sm" className="self-center">
       <p className="text-stone-600 font-normal mb-4 text-base text-center">
         I created this website as a way to connect with people who want to play
         some music together! In the future I&apos;d like to expand it to help

@@ -4,7 +4,10 @@ import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 import AchievementInfo from "@/components/form_sections/AchievmentInfo";
 import InstrumentInfo from "@/components/form_sections/InstrumentInfo";
 import PersonalInfo from "@/components/form_sections/PersonalInfo";
-import useWindowDimensions from "../../scripts/helper";
+import useWindowDimensions, {
+  formHeader,
+  formHeaderInactive,
+} from "../../scripts/helper";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 import { useEffect, useState } from "react";
@@ -13,11 +16,7 @@ import { fetchRandomPokemon } from "../../scripts/helper";
 
 import { connectToDatabase } from "../../scripts/mongodb";
 import { AxiosError } from "axios";
-
-const formHeader =
-  "uppercase text-xs font-normal text-stone-700 mb-4 shrink-0 xl:text-base";
-const formHeaderInactive =
-  "uppercase text-xs font-normal text-stone-400 mb-4 shrink-0 xl:text-base";
+import { Container } from "@mui/material";
 
 const Form: React.FC<PropsFromRedux> = ({
   stateList,
@@ -38,11 +37,13 @@ const Form: React.FC<PropsFromRedux> = ({
   if (!nickname) return null;
 
   function handleClick() {
+    /*
     if (status === "authenticated") {
       setFormOpen(true);
     } else if (status === "unauthenticated") {
       signIn("google");
-    }
+    }*/
+    setFormOpen(true);
   }
   function handleCancel() {
     signOut();
@@ -65,11 +66,35 @@ const Form: React.FC<PropsFromRedux> = ({
         instruments: stateList.instruments,
         achievements: stateList.achievements,
       });
+      postData({
+        personal: stateList.personal,
+        instruments: stateList.instruments,
+        achievements: stateList.achievements,
+      });
       setComplete();
     }
   }
+
+  const postData = async (data: any) => {
+    try {
+      const response = await fetch("/api/postData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error("Error while posting data:", error);
+      return { success: false, error: "Error while posting data" };
+    }
+  };
+
   return (
-    <>
+    <Container>
       {stateList.form_open ? (
         <>
           <button
@@ -103,47 +128,6 @@ const Form: React.FC<PropsFromRedux> = ({
                   })}
                 </ul>
                 <div className="flex flex-col">
-                  <div className="flex gap-4 mb-4">
-                    {width >= 768 ||
-                    (width < 768 && stateList.personal_isOpen) ? (
-                      <h1
-                        className={
-                          stateList.personal_isOpen
-                            ? formHeader
-                            : formHeaderInactive
-                        }
-                      >
-                        1. Personal Details
-                      </h1>
-                    ) : undefined}
-                    {width >= 768 ||
-                    (width < 768 && stateList.instrument_isOpen) ? (
-                      <h1
-                        className={
-                          stateList.instrument_isOpen
-                            ? formHeader
-                            : formHeaderInactive
-                        }
-                      >
-                        2. Instruments
-                      </h1>
-                    ) : undefined}
-                    {width >= 768 ||
-                    (width < 768 && stateList.achievement_isOpen) ? (
-                      <h1
-                        className={
-                          stateList.achievement_isOpen
-                            ? formHeader
-                            : formHeaderInactive
-                        }
-                      >
-                        3. Achievements
-                        <sup className="ml-1 text-xs text-stone-500 font-light lowercase align-text-top">
-                          optional
-                        </sup>
-                      </h1>
-                    ) : undefined}
-                  </div>
                   {stateList.personal_isOpen && <PersonalInfo />}
                   {stateList.instrument_isOpen && <InstrumentInfo />}
                   {stateList.achievement_isOpen && <AchievementInfo />}
@@ -180,7 +164,7 @@ const Form: React.FC<PropsFromRedux> = ({
           </button>
         </>
       )}
-    </>
+    </Container>
   );
 };
 
