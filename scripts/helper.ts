@@ -191,6 +191,9 @@ export const fetchRandomPokemon = async () => {
 };
 
 export const instrumentTypes = [
+  "Accordion",
+  "Triangle",
+  "Cajone",
   "Piano",
   "Violin",
   "Guitar",
