@@ -8,7 +8,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method } = req;
+  const { method, query } = req;
+  const submissionIndex = parseInt(query.index as string, 10);
 
   if (method === "GET") {
     try {
@@ -16,14 +17,22 @@ export default async function handler(
       const database = client.db("join_my_band");
       const collection = database.collection("submissions");
 
-      const totalDocuments = await collection.countDocuments();
+      const submission = await collection.findOne(
+        {},
+        { skip: submissionIndex }
+      );
 
-      res.status(200).json({ success: true, total: totalDocuments });
+      if (!submission) {
+        res.status(404).json({ success: false, error: "Submission not found" });
+        return;
+      }
+
+      res.status(200).json({ success: true, data: submission });
     } catch (error) {
-      console.error("Error while retrieving total count:", error);
+      console.error("Error while retrieving submission:", error);
       res
         .status(500)
-        .json({ success: false, error: "Error while retrieving total count" });
+        .json({ success: false, error: "Error while retrieving submission" });
     } finally {
       await client.close();
     }

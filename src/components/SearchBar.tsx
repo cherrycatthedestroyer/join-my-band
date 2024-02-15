@@ -16,16 +16,17 @@ import { Container } from "@mui/material";
 interface SearchBarProps extends PropsFromRedux {
   subList: Submission[];
   setSubList: (value: SetStateAction<Submission[]>) => void;
+  resetSubList: () => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
   clientState,
-  submission,
   resetFilters,
   setAchFilter,
   setSkillFilter,
   setExpFilter,
   setSubList,
+  resetSubList,
 }) => {
   const searchInput = useRef<HTMLInputElement>(null);
   function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
@@ -33,7 +34,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     if (value !== "") {
       setSubList((prev) => sortByFilter(prev, value));
     } else {
-      setSubList(submission);
+      resetSubList();
     }
     filterList();
   }
@@ -73,7 +74,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   function handleReset() {
     resetFilters();
     searchInput.current!.value = "";
-    setSubList(submission);
+    resetSubList();
   }
   return (
     <Container disableGutters>

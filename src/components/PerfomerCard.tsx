@@ -3,15 +3,7 @@ import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 import { Submission } from "../../store/submissions";
 import useWindowDimensions, { cardButtonStyling } from "../../scripts/helper";
 import { useRouter } from "next/router";
-import {
-  Card,
-  CardMedia,
-  Box,
-  CardContent,
-  Typography,
-  Icon,
-  Container,
-} from "@mui/material";
+import { Container } from "@mui/material";
 
 interface ItemProps extends PropsFromRedux {
   item: Submission;
@@ -22,7 +14,6 @@ const PerformerCard: React.FC<ItemProps> = ({
   submission,
   setSelectedSub,
   item,
-  item_index,
 }) => {
   let { width } = useWindowDimensions();
   const router = useRouter();
@@ -34,7 +25,7 @@ const PerformerCard: React.FC<ItemProps> = ({
         : undefined
     );
     setSelectedSub(index);
-    router.push("/" + item_name);
+    router.push("/" + index);
   }
   return (
     <Container

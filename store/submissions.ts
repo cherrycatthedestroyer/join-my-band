@@ -8,7 +8,7 @@ export interface Submission {
   personal: Personal;
 }
 
-const initialState: Submission[] = [
+export const initialState: Submission[] = [
   {
     personal: {
       performer_name: {

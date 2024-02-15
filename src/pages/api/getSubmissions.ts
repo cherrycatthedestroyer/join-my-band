@@ -16,11 +16,7 @@ export default async function handler(
       await client.connect();
       const database = client.db("join_my_band");
       const collection = database.collection("submissions");
-      const submissions = await collection
-        .find({})
-        .skip(page * 4)
-        .limit(4)
-        .toArray();
+      const submissions = await collection.find({}).toArray();
       res.status(200).json({ success: true, data: submissions });
     } catch (error) {
       console.error("Error while retrieving submissions:", error);
