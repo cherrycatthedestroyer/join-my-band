@@ -11,14 +11,12 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <StrictMode>
-      <SessionProvider session={session}>
-        <Provider store={store}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </Provider>
-      </SessionProvider>
-    </StrictMode>
+    <SessionProvider session={session}>
+      <Provider store={store}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
+    </SessionProvider>
   );
 }
