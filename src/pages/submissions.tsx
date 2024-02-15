@@ -54,7 +54,7 @@ const Submissions: React.FC<PropsFromRedux> = ({
       <SearchBar subList={subList} setSubList={setSubList} />
       <div className="flex justify-center my-6">
         <Pagination
-          count={evenlyDivides(totalCount, 4) + 2}
+          count={evenlyDivides(totalCount, 4)}
           page={page}
           onChange={handlePageChange}
         />
