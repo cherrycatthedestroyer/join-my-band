@@ -12,7 +12,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
         alt="test-picture"
         width={263}
         height={29}
-        className="mt-4 self-center"
+        className="mt-4 self-center mx-auto"
       />
       <Navbar />
       {children}

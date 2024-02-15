@@ -40,7 +40,7 @@ const PerformerCard: React.FC<ItemProps> = ({
     <Container
       className="mt-4 bg-white shadow-md rounded mb-2 flex cursor-pointer hover:bg-stone-100"
       onClick={() => routeToSubmissionPage(item.personal.performer_name.value)}
-      disableGutters
+      sx={{ display: "flex" }}
     >
       <img
         src={
