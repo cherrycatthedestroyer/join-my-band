@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import store from "../../store/store";
 import { SessionProvider } from "next-auth/react";
 import Layout from "@/layout";
-import { StrictMode } from "react";
 
 export default function App({
   Component,

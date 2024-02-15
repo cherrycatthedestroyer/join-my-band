@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 
 import { fetchRandomPokemon } from "../../scripts/helper";
 
-import { connectToDatabase } from "../../scripts/mongodb";
 import { AxiosError } from "axios";
 import { Container } from "@mui/material";
 
