@@ -23,7 +23,7 @@ const Submission: React.FC<PropsFromRedux> = ({
   }
 
   return (
-    <Container fixed className="w-4/5 self-center md:w-1/2">
+    <Container maxWidth="xs" className="w-4/5 self-center md:w-1/2">
       <button
         type="submit"
         className="hover:text-white text-stone-700 text-xs py-2 px-1 rounded self-start"

@@ -20,7 +20,10 @@ const Submissions: React.FC<PropsFromRedux> = ({
   }, [submission]);
 
   return (
-    <Container fixed className="w-4/5 self-center md:w-1/2 scrollbar-hide">
+    <Container
+      maxWidth="xs"
+      className="w-4/5 self-center md:w-1/2 scrollbar-hide"
+    >
       <SearchBar subList={subList} setSubList={setSubList} />
       <ul>
         {subList.length > 0 ? (
