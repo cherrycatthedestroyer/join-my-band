@@ -6,9 +6,9 @@ import { Container } from "@mui/material";
 
 const Home: React.FC<PropsFromRedux> = () => {
   return (
-    <div className="w-4/5 self-center md:w-1/2">
+    <Container fixed className="w-4/5 self-center md:w-1/2">
       <Form />
-    </div>
+    </Container>
   );
 };
 
