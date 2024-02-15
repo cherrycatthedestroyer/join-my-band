@@ -6,7 +6,7 @@ import { Container } from "@mui/material";
 
 const Home: React.FC<PropsFromRedux> = () => {
   return (
-    <Container maxWidth="xs" className="w-4/5 self-center md:w-1/2">
+    <Container maxWidth="sm" className="w-4/5 self-center md:w-1/2">
       <Form />
     </Container>
   );
