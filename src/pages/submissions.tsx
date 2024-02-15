@@ -36,7 +36,7 @@ const Submissions: React.FC<PropsFromRedux> = ({
 
   const fetchTotalCount = async () => {
     try {
-      const response = await fetch(`/api/getTotalCount`);
+      const response = await fetch(`/api/getSubmissionsCount`);
       const result = await response.json();
       setTotalCount(result.total);
     } catch (error) {
