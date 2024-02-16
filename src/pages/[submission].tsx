@@ -49,7 +49,6 @@ const Submission: React.FC<PropsFromRedux> = ({
     <Container maxWidth="md" className="self-center">
       {profile !== undefined ? (
         <>
-          {" "}
           <button
             type="button"
             className="hover:text-white text-stone-700 text-xs py-2 px-1 rounded self-start"
@@ -177,7 +176,31 @@ const Submission: React.FC<PropsFromRedux> = ({
           </div>
         </>
       ) : (
-        <Skeleton width={"100%"} height={575} animation="wave" />
+        <>
+          <button
+            type="button"
+            className="hover:text-white text-stone-700 text-xs py-2 px-1 rounded self-start"
+            onClick={routeToSubmissions}
+          >
+            return to submissions
+          </button>
+          <div className="rounded mb-2 flex flex-col xl:flex-row gap-2">
+            <Skeleton
+              width={"50%"}
+              height={409}
+              animation="wave"
+              variant="rounded"
+            />
+            <div className="p-4 xl:w-1/2">
+              <Skeleton
+                width={"100%"}
+                height={"100%"}
+                animation="wave"
+                variant="rounded"
+              />
+            </div>
+          </div>
+        </>
       )}
     </Container>
   );
