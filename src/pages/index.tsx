@@ -25,7 +25,6 @@ const Home: React.FC<PropsFromRedux> = () => {
 
   return (
     <Container maxWidth="sm" className="self-center">
-      <p>{ip ? ip : "loading"}</p>
       <Form />
     </Container>
   );
