@@ -219,6 +219,16 @@ export const fetchRandomPokemon = async () => {
   };
 };
 
+export const getIpAddress = async () => {
+  try {
+    const response = await axios.get("/api/getIp");
+    return response.data.ip;
+  } catch (error) {
+    console.error("Error fetching IP address:", error);
+    return null;
+  }
+};
+
 export const instrumentTypes = [
   "Accordion",
   "Triangle",

@@ -2,9 +2,14 @@ import Form from "@/components/Form";
 
 import { connect, ConnectedProps } from "react-redux";
 import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
-import { Box, Button, Container, Modal } from "@mui/material";
+import { Container } from "@mui/material";
+import { useEffect } from "react";
+import { getIpAddress } from "../../scripts/helper";
 
 const Home: React.FC<PropsFromRedux> = () => {
+  useEffect(() => {
+    getIpAddress();
+  });
   return (
     <Container maxWidth="sm" className="self-center">
       <Form />

@@ -182,7 +182,7 @@ const Submission: React.FC<PropsFromRedux> = ({
           <div className="flex shadow mb-4 border rounded">
             <input
               type="text"
-              placeholder="search by instrument"
+              placeholder="add a comment"
               className={
                 "rounded-l py-2 pl-3 w-4/5 text-gray-700 leading-tight focus:outline-stone-300"
               }
@@ -192,7 +192,7 @@ const Submission: React.FC<PropsFromRedux> = ({
                 "hover:text-red-500 w-1/5 rounded-r bg-stone-100 text-xs py-2 pr-3"
               }
             >
-              submit
+              add
             </button>
           </div>
           <div className="bg-white shadow-md rounded mb-2 flex flex-col gap-2 p-4">
