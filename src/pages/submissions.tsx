@@ -69,11 +69,11 @@ const Submissions: React.FC<PropsFromRedux> = ({ setSelectedSub }) => {
                 item_index < (page - 1) * 4 + 4
               ) {
                 return (
-                  <li key={item_index}>
+                  <li key={item._id}>
                     <PerformerCard
                       item={item}
-                      item_index={item_index}
-                      key={item_index}
+                      item_index={item._id}
+                      key={item._id}
                     />
                   </li>
                 );

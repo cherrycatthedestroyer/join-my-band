@@ -7,30 +7,24 @@ import { Container } from "@mui/material";
 
 interface ItemProps extends PropsFromRedux {
   item: Submission;
-  item_index: number;
+  item_index: string;
 }
 
 const PerformerCard: React.FC<ItemProps> = ({
   submission,
   setSelectedSub,
   item,
+  item_index,
 }) => {
   let { width } = useWindowDimensions();
   const router = useRouter();
-  function routeToSubmissionPage(item_name: string) {
-    let index = 0;
-    submission.map((item, item_index) =>
-      item.personal.performer_name.value === item_name
-        ? (index = item_index)
-        : undefined
-    );
-    setSelectedSub(index);
-    router.push("/" + index);
+  function routeToSubmissionPage() {
+    router.push("/" + item_index);
   }
   return (
     <Container
       className="mt-4 bg-white shadow-md rounded mb-2 flex cursor-pointer hover:bg-stone-100"
-      onClick={() => routeToSubmissionPage(item.personal.performer_name.value)}
+      onClick={() => routeToSubmissionPage()}
       sx={{ display: "flex" }}
       disableGutters
     >

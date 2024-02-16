@@ -61,6 +61,7 @@ const Form: React.FC<PropsFromRedux> = ({
       ) {
       }
       addSubmission({
+        _id: "",
         personal: stateList.personal,
         instruments: stateList.instruments,
         achievements: stateList.achievements,

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 const uri = process.env.NEXT_PUBLIC_MONGODB_URI as string;
 const client = new MongoClient(uri);
@@ -9,7 +9,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { method, query } = req;
-  const submissionIndex = parseInt(query.index as string, 10);
+  const submissionId = query.id as string;
 
   if (method === "GET") {
     try {
@@ -17,10 +17,9 @@ export default async function handler(
       const database = client.db("join_my_band");
       const collection = database.collection("submissions");
 
-      const submission = await collection.findOne(
-        {},
-        { skip: submissionIndex }
-      );
+      const submission = await collection.findOne({
+        _id: new ObjectId(submissionId),
+      });
 
       if (!submission) {
         res.status(404).json({ success: false, error: "Submission not found" });
