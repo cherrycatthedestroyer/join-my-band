@@ -185,12 +185,14 @@ const Submission: React.FC<PropsFromRedux> = ({
             return to submissions
           </button>
           <div className="rounded mb-2 flex flex-col xl:flex-row gap-2">
-            <Skeleton
-              width={"50%"}
-              height={409}
-              animation="wave"
-              variant="rounded"
-            />
+            <div className="rounded-l xl:w-1/2 xl:object-normal object-cover">
+              <Skeleton
+                width={"100%"}
+                height={409}
+                animation="wave"
+                variant="rounded"
+              />
+            </div>
             <div className="p-4 xl:w-1/2">
               <Skeleton
                 width={"100%"}
