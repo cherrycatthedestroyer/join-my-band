@@ -12,6 +12,7 @@ import { Container, Skeleton } from "@mui/material";
 import { usePathname } from "next/navigation";
 
 import { Submission } from "../../store/submissions";
+import OutlinedInput from "@mui/material/OutlinedInput";
 
 const Submission: React.FC<PropsFromRedux> = ({
   submission,
@@ -173,6 +174,41 @@ const Submission: React.FC<PropsFromRedux> = ({
                 </div>
               ) : undefined}
             </div>
+          </div>
+
+          <h2 className="text-xl md:mb-4 text-slate-700 mb-2 font-bold mt-8">
+            1 comment
+          </h2>
+          <div className="flex shadow mb-4 border rounded">
+            <input
+              type="text"
+              placeholder="search by instrument"
+              className={
+                "rounded-l py-2 pl-3 w-4/5 text-gray-700 leading-tight focus:outline-stone-300"
+              }
+            />
+            <button
+              className={
+                "hover:text-red-500 w-1/5 rounded-r bg-stone-100 text-xs py-2 pr-3"
+              }
+            >
+              submit
+            </button>
+          </div>
+          <div className="bg-white shadow-md rounded mb-2 flex flex-col gap-2 p-4">
+            <div className="flex justify-between">
+              <h2 className="text-sm md:mb-2 text-slate-700 mb-2 font-semibold">
+                swagman32111
+              </h2>
+              <h2 className="text-sm md:mb-2 text-slate-500 mb-2">
+                1 year ago
+              </h2>
+            </div>
+            <p className="text-left font-normal text-stone-700 text-xs">
+              I really like the fact that he is eating a chicken burger from
+              popeyes because they have the best chicken burgers in town and
+              that is a FACT!
+            </p>
           </div>
         </>
       ) : (
