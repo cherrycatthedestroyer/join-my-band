@@ -11,7 +11,7 @@ import { Container, Skeleton } from "@mui/material";
 
 import { usePathname } from "next/navigation";
 
-import { initialState, Submission } from "../../store/submissions";
+import { Submission } from "../../store/submissions";
 
 const Submission: React.FC<PropsFromRedux> = ({
   submission,

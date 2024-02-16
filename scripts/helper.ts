@@ -177,7 +177,6 @@ export function sortByFilter(stateObject: Submission[], term: string) {
 
 interface SinglePokemonResponse {
   name: string;
-  // Other properties might be included here, such as abilities, types, stats, etc.
 }
 
 export const fetchRandomPokemon = async () => {
