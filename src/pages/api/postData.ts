@@ -15,7 +15,7 @@ export default async function handler(
       await client.connect();
       const database = client.db("join_my_band");
       const collection = database.collection("submissions");
-      const result = await collection.insertOne(body); // Assuming body is the data you want to post
+      const result = await collection.insertOne(body);
       console.log(
         `Successfully inserted document with _id: ${result.insertedId}`
       );

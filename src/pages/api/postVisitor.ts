@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 const uri = process.env.NEXT_PUBLIC_MONGODB_URI as string;
 const client = new MongoClient(uri);
@@ -19,7 +19,14 @@ export default async function handler(
       console.log(
         `Successfully inserted document with _id: ${result.insertedId}`
       );
-      res.status(201).json({ success: true, data: result.insertedId });
+
+      // Retrieve the inserted document by querying with its ID
+      const insertedId = result.insertedId;
+      const insertedDocument = await collection.findOne({
+        _id: new ObjectId(insertedId),
+      });
+
+      res.status(201).json({ success: true, data: insertedDocument });
     } catch (error) {
       console.error("Error while inserting document:", error);
       res

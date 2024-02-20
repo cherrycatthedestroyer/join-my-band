@@ -10,12 +10,7 @@ interface ItemProps extends PropsFromRedux {
   item_index: string;
 }
 
-const PerformerCard: React.FC<ItemProps> = ({
-  submission,
-  setSelectedSub,
-  item,
-  item_index,
-}) => {
+const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
   let { width } = useWindowDimensions();
   const router = useRouter();
   function routeToSubmissionPage() {

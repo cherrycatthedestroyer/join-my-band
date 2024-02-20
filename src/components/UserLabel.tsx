@@ -2,24 +2,72 @@ import { connect, ConnectedProps } from "react-redux";
 import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { fetchRandomPokemon } from "../../scripts/helper";
-import { AxiosError } from "axios";
+import { fetchRandomColor, fetchRandomPokemon } from "../../scripts/helper";
+import axios from "axios";
 import { Container } from "@mui/material";
 
 const UserLabel: React.FC<PropsFromRedux> = () => {
   const { data: session, status } = useSession();
-  const [nickname, setNickname] = useState<string | null>();
+  const [nickname, setNickname] = useState<string>("none");
+  const [isLoading, setIsLoading] = useState("unloaded");
 
   useEffect(() => {
-    fetchRandomPokemon()
-      .then((p) => setNickname(p.name))
-      .catch((e: Error | AxiosError) => console.log(e));
-  }, []);
+    if (isLoading === "unloaded") {
+      setIsLoading("loading");
+      checkIpAddress();
+    }
+  }, [isLoading]);
+
+  const checkIpAddress = async () => {
+    let ip_address: string;
+    try {
+      const response = await axios.get("/api/getIp").then((res) => {
+        ip_address = res.data.ip;
+        return axios.get(`/api/getVisitors?ip=${res.data.ip}`);
+      });
+      if (response.status === 200) {
+        if (response.data.success) {
+          setNickname(response.data.data.name);
+          setIsLoading("loaded");
+        } else {
+          try {
+            const response2 = await Promise.all([
+              fetchRandomPokemon(),
+              fetchRandomColor(),
+            ]).then(function ([pokemon, color]) {
+              return axios.post(
+                "/api/postVisitor",
+                JSON.stringify({
+                  ip_id: ip_address,
+                  name: color.name + " " + pokemon.name,
+                }),
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+            });
+            if (response2.status === 201) {
+              setNickname(response2.data.data.name);
+              setIsLoading("loaded");
+            }
+          } catch (error) {
+            console.log("error posting ip address", error);
+          }
+        }
+        setIsLoading("loaded");
+      }
+    } catch (error) {
+      console.log("Error while checking IP address:", error);
+    }
+  };
 
   if (!nickname) return null;
   function handleCancel() {
     signOut();
   }
+
   return (
     <Container disableGutters>
       <button
@@ -29,7 +77,9 @@ const UserLabel: React.FC<PropsFromRedux> = () => {
         onClick={status !== "authenticated" ? undefined : handleCancel}
       >
         {status !== "authenticated"
-          ? "anonymous " + nickname
+          ? isLoading === "loaded"
+            ? "anonymous " + nickname
+            : "loading ..."
           : "sign out " + session?.user?.email}
       </button>
     </Container>

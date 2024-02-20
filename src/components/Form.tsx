@@ -4,17 +4,8 @@ import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 import AchievementInfo from "@/components/form_sections/AchievmentInfo";
 import InstrumentInfo from "@/components/form_sections/InstrumentInfo";
 import PersonalInfo from "@/components/form_sections/PersonalInfo";
-import useWindowDimensions, {
-  formHeader,
-  formHeaderInactive,
-} from "../../scripts/helper";
-import { useSession, signIn, signOut } from "next-auth/react";
-
-import { useEffect, useState } from "react";
-
-import { fetchRandomPokemon } from "../../scripts/helper";
-
-import { AxiosError } from "axios";
+import useWindowDimensions from "../../scripts/helper";
+import { useSession, signOut } from "next-auth/react";
 import { Container } from "@mui/material";
 
 const Form: React.FC<PropsFromRedux> = ({
@@ -25,15 +16,6 @@ const Form: React.FC<PropsFromRedux> = ({
 }) => {
   const { data: session, status } = useSession();
   const { width } = useWindowDimensions();
-  const [nickname, setNickname] = useState<string | null>();
-
-  useEffect(() => {
-    fetchRandomPokemon()
-      .then((p) => setNickname(p.name))
-      .catch((e: Error | AxiosError) => console.log(e));
-  }, []);
-
-  if (!nickname) return null;
 
   function handleClick() {
     /*

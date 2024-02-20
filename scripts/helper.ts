@@ -40,6 +40,7 @@ export const formHeaderInactive =
 
 import { useState, useEffect } from "react";
 import { Submission } from "../store/submissions";
+import { MongoClient } from "mongodb";
 
 export function evenlyDivides(dividend: number, divisor: number) {
   return Math.ceil(dividend / divisor);
@@ -216,6 +217,19 @@ export const fetchRandomPokemon = async () => {
   );
   return {
     name: res.data.name,
+  };
+};
+
+function getRandomColor() {
+  return Math.floor(Math.random() * 255).toString();
+}
+
+export const fetchRandomColor = async () => {
+  const res = await axios.get(
+    "https://random-word-form.herokuapp.com/random/adjective"
+  );
+  return {
+    name: res.data,
   };
 };
 
