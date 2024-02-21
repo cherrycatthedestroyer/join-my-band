@@ -17,11 +17,6 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       />
       <Navbar />
       {children}
-      <Container sx={{ marginLeft: "auto", marginRight: "auto" }}>
-        <footer className="mx-auto self-center">
-          Created by Josh Job © 2024
-        </footer>
-      </Container>
     </Container>
   );
 };
