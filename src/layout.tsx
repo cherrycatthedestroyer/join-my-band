@@ -17,10 +17,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       />
       <Navbar />
       {children}
-      <Container
-        disableGutters
-        sx={{ marginLeft: "auto", marginRight: "auto" }}
-      >
+      <Container sx={{ marginLeft: "auto", marginRight: "auto" }}>
         <footer>Created by Josh Job © 2024</footer>
       </Container>
     </Container>
