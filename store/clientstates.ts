@@ -8,27 +8,47 @@ interface clientStateStructure {
   skillFilter: boolean;
   expFilter: boolean;
   achFilter: boolean;
+  likeFilter: boolean;
+  hasLiked: boolean;
 }
 
 const initialState: clientStateStructure = {
   selectedAchievement: 0,
   selectedSubmission: 0,
   searchString: "",
+  likeFilter: false,
   skillFilter: false,
   expFilter: false,
   achFilter: false,
+  hasLiked: false,
 };
 
 const clientStateSlice = createSlice({
   name: "clientState",
   initialState: initialState,
   reducers: {
+    SET_HASLIKED: (state, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        hasLiked: action.payload,
+      };
+    },
     RESET_FILTERS: (state) => {
       return {
         ...state,
         skillFilter: false,
         expFilter: false,
         achFilter: false,
+        likeFilter: false,
+      };
+    },
+    SET_LIKE_FILTER: (state, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        skillFilter: false,
+        expFilter: false,
+        achFilter: false,
+        likeFilter: true,
       };
     },
     SET_EXP_FILTER: (state, action: PayloadAction<boolean>) => {
@@ -37,6 +57,7 @@ const clientStateSlice = createSlice({
         skillFilter: false,
         expFilter: true,
         achFilter: false,
+        likeFilter: false,
       };
     },
     SET_ACH_FILTER: (state, action: PayloadAction<boolean>) => {
@@ -45,6 +66,7 @@ const clientStateSlice = createSlice({
         skillFilter: false,
         expFilter: false,
         achFilter: true,
+        likeFilter: false,
       };
     },
     SET_SKILL_FILTER: (state, action: PayloadAction<boolean>) => {
@@ -53,6 +75,7 @@ const clientStateSlice = createSlice({
         skillFilter: true,
         expFilter: false,
         achFilter: false,
+        likeFilter: false,
       };
     },
     UPDATE_SEARCH_FIELD: (state, action: PayloadAction<string>) => {
@@ -77,6 +100,8 @@ const clientStateSlice = createSlice({
 });
 
 export const {
+  SET_LIKE_FILTER,
+  SET_HASLIKED,
   RESET_FILTERS,
   SET_SKILL_FILTER,
   SET_EXP_FILTER,

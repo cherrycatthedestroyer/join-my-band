@@ -6,7 +6,7 @@ import { fetchRandomColor, fetchRandomPokemon } from "../../scripts/helper";
 import axios from "axios";
 import { Container } from "@mui/material";
 
-const UserLabel: React.FC<PropsFromRedux> = () => {
+const UserLabel: React.FC<PropsFromRedux> = ({ setIp, stateList }) => {
   const { data: session, status } = useSession();
   const [nickname, setNickname] = useState<string>("none");
   const [isLoading, setIsLoading] = useState("unloaded");
@@ -19,10 +19,9 @@ const UserLabel: React.FC<PropsFromRedux> = () => {
   }, [isLoading]);
 
   const checkIpAddress = async () => {
-    let ip_address: string;
     try {
       const response = await axios.get("/api/getIp").then((res) => {
-        ip_address = res.data.ip;
+        setIp(res.data.ip);
         return axios.get(`/api/getVisitors?ip=${res.data.ip}`);
       });
       if (response.status === 200) {
@@ -38,7 +37,7 @@ const UserLabel: React.FC<PropsFromRedux> = () => {
               return axios.post(
                 "/api/postVisitor",
                 JSON.stringify({
-                  ip_id: ip_address,
+                  ip_id: stateList.ip_address,
                   name: color.name + " " + pokemon.name,
                 }),
                 {

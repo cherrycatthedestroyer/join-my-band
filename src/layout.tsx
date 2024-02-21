@@ -17,6 +17,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       />
       <Navbar />
       {children}
+      <footer className="text-xs my-6">created by josh job © 2024</footer>
     </Container>
   );
 };

@@ -1,12 +1,16 @@
 import { connect, ConnectedProps } from "react-redux";
 import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
-import { Submission } from "../../store/submissions";
-import useWindowDimensions, { cardButtonStyling } from "../../scripts/helper";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import useWindowDimensions, {
+  cardButtonStyling,
+  SubmissionProfile,
+} from "../../scripts/helper";
 import { useRouter } from "next/router";
 import { Container } from "@mui/material";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 
 interface ItemProps extends PropsFromRedux {
-  item: Submission;
+  item: SubmissionProfile;
   item_index: string;
 }
 
@@ -23,15 +27,37 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
       sx={{ display: "flex" }}
       disableGutters
     >
-      <img
-        src={
-          item.personal.image.value != ""
-            ? item.personal.image.value
-            : "/test-profile.png"
-        }
-        alt="test-picture"
-        className="rounded-l w-2/5"
-      />
+      <div className="rounded-l w-2/5 relative">
+        <img
+          src={
+            item.personal.image.value != ""
+              ? item.personal.image.value
+              : "/test-profile.png"
+          }
+          alt="test-picture"
+          className="rounded-l z-0"
+        />
+
+        <>
+          <div className="absolute bg-gradient-to-t from-black from-5% via-transparent via-50% w-full h-full top-0 opacity-70" />
+          <div className="z-40 absolute left-0 bottom-0 p-4 flex gap-2">
+            {parseInt(item.likes) > 0 ? (
+              <div className="flex gap-1">
+                <FavoriteIcon fontSize="small" style={{ color: "#ffff" }} />
+                <p className="text-xs self-center text-white">{item.likes}</p>
+              </div>
+            ) : undefined}
+            {item.comments !== undefined ? (
+              <div className="flex gap-1">
+                <ChatBubbleIcon fontSize={"small"} style={{ color: "#ffff" }} />
+                <p className="text-xs self-center text-white">
+                  {item.comments.length}
+                </p>
+              </div>
+            ) : undefined}
+          </div>
+        </>
+      </div>
       <div className="flex flex-col p-4">
         <h2 className="text-stone-700 text-base font-semibold mb-2 lg:text-2xl xl:text-4xl xl:mb-4 text-nowrap">
           {item.personal.performer_name.value}
@@ -90,13 +116,17 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
         <div className="collapse lg:visible">
           <ul className="flex flex-wrap gap-2">
             {item.achievements[0].achievement_name.value.trim().length > 0 ? (
-              <li className={cardButtonStyling + "text-nowrap"}>
-                {item.achievements[0].achievement_name.value}
+              <li className={cardButtonStyling + " max-w-10 md:max-w-32"}>
+                <p className="truncate">
+                  {item.achievements[0].achievement_name.value}
+                </p>
               </li>
             ) : undefined}
             {item.achievements.length > 1 ? (
-              <li className={cardButtonStyling + "text-nowrap"}>
-                {"+ " + (item.achievements.length - 1)}
+              <li className={cardButtonStyling + " max-w-32"}>
+                <p className="truncate">
+                  {"+ " + (item.achievements.length - 1)}
+                </p>
               </li>
             ) : undefined}
           </ul>

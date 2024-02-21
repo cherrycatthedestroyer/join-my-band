@@ -1,5 +1,6 @@
 import { RootState } from "../store/store";
 import {
+  SET_IP,
   SET_SELECTED_PAGE,
   SET_COMPLETE,
   SET_FORM_OPEN,
@@ -26,7 +27,9 @@ import {
   Achievement,
 } from "../store/statelist";
 import {
+  SET_HASLIKED,
   RESET_FILTERS,
+  SET_LIKE_FILTER,
   SET_SKILL_FILTER,
   SET_EXP_FILTER,
   SET_ACH_FILTER,
@@ -43,8 +46,11 @@ export function mapStateToProps(state: RootState) {
 }
 
 export const mapDispatchToProps = {
+  setHasLiked: (value: boolean) => SET_HASLIKED(value),
+  setIp: (value: string) => SET_IP(value),
   setSelectedPage: (value: string) => SET_SELECTED_PAGE(value),
   resetFilters: () => RESET_FILTERS(),
+  setLikeFilter: (value: boolean) => SET_LIKE_FILTER(value),
   setSkillFilter: (value: boolean) => SET_SKILL_FILTER(value),
   setExpFilter: (value: boolean) => SET_EXP_FILTER(value),
   setAchFilter: (value: boolean) => SET_ACH_FILTER(value),

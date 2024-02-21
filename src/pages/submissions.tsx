@@ -1,14 +1,13 @@
 import { connect, ConnectedProps } from "react-redux";
 import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 import { useEffect, useState } from "react";
-import { Submission } from "../../store/submissions";
 import PerformerCard from "@/components/PerfomerCard";
 import SearchBar from "@/components/SearchBar";
-import { CircularProgress, Container, Pagination, Stack } from "@mui/material";
-import { evenlyDivides } from "../../scripts/helper";
+import { CircularProgress, Container, Pagination } from "@mui/material";
+import { evenlyDivides, SubmissionProfile } from "../../scripts/helper";
 
 const Submissions: React.FC<PropsFromRedux> = ({ setSelectedSub }) => {
-  const [subList, setSubList] = useState<Submission[]>([]);
+  const [subList, setSubList] = useState<SubmissionProfile[]>([]);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState("empty");
   const totalCount = subList ? subList.length : 0;
@@ -16,7 +15,7 @@ const Submissions: React.FC<PropsFromRedux> = ({ setSelectedSub }) => {
   useEffect(() => {
     setSelectedSub(0);
     getSubmissions();
-  }, [page]);
+  }, []);
 
   const getSubmissions = async () => {
     setStatus("loading");
@@ -56,7 +55,7 @@ const Submissions: React.FC<PropsFromRedux> = ({ setSelectedSub }) => {
         />
       </div>
       {status === "loading" ? (
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center my-16">
           <CircularProgress color="inherit" size={"8rem"} />
         </div>
       ) : undefined}

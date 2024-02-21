@@ -59,6 +59,7 @@ export interface stateStructure {
   form_open: boolean;
   complete: boolean;
   selected_page: string;
+  ip_address: string;
 }
 
 const initialState: stateStructure = {
@@ -161,12 +162,19 @@ const initialState: stateStructure = {
   form_open: false,
   complete: false,
   selected_page: "home",
+  ip_address: "",
 };
 
 const statelistSlice = createSlice({
   name: "statelist",
   initialState,
   reducers: {
+    SET_IP: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        ip_address: action.payload,
+      };
+    },
     SET_SELECTED_PAGE: (state, action: PayloadAction<string>) => {
       return {
         ...state,
@@ -411,6 +419,7 @@ const statelistSlice = createSlice({
 });
 
 export const {
+  SET_IP,
   SET_SELECTED_PAGE,
   SET_COMPLETE,
   SET_FORM_OPEN,

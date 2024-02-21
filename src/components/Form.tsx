@@ -52,6 +52,8 @@ const Form: React.FC<PropsFromRedux> = ({
         personal: stateList.personal,
         instruments: stateList.instruments,
         achievements: stateList.achievements,
+        comments: [],
+        likes: 0,
       });
       setComplete();
     }

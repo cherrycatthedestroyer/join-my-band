@@ -1,9 +1,14 @@
 import { connect, ConnectedProps } from "react-redux";
 import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
+import { styled } from "@mui/material/styles";
+import Rating from "@mui/material/Rating";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import {
   submissionButtonStyling,
   activeSubmissionButtonStyling,
+  SubmissionProfile,
 } from "../../scripts/helper";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -11,18 +16,31 @@ import { Container, Skeleton } from "@mui/material";
 
 import { usePathname } from "next/navigation";
 
-import { Submission } from "../../store/submissions";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import Comments from "@/components/Comments";
+import axios from "axios";
 
-const Submission: React.FC<PropsFromRedux> = ({
+const StyledRating = styled(Rating)({
+  "& .MuiRating-iconFilled": {
+    color: "#ff6d75",
+  },
+  "& .MuiRating-iconHover": {
+    color: "#ff3d47",
+  },
+});
+
+const SubmissionPage: React.FC<PropsFromRedux> = ({
   submission,
   setSelectedAchievementSub,
   clientState,
+  stateList,
+  setHasLiked,
 }) => {
-  const [profile, setProfile] = useState<Submission>();
+  const [profile, setProfile] = useState<SubmissionProfile>();
   const router = useRouter();
   const pathname = usePathname();
+
   useEffect(() => {
+    setHasLiked(false);
     setSelectedAchievementSub(0);
     pathname !== null
       ? fetchSubmission(pathname.replace(/\//g, ""))
@@ -33,6 +51,59 @@ const Submission: React.FC<PropsFromRedux> = ({
     router.push("/submissions");
   }
 
+  const checkLike = async () => {
+    try {
+      const response = await axios.get(
+        `/api/getLike?ip_id=${stateList.ip_address}&sub_id=${pathname.replace(
+          /\//g,
+          ""
+        )}`
+      );
+      if (response.status === 200) {
+        if (response.data.exists) {
+          setHasLiked(true);
+        } else {
+          setHasLiked(false);
+        }
+      }
+    } catch (error) {
+      console.log("error checking if submission has been liked");
+    }
+  };
+
+  const handleLike = async () => {
+    try {
+      const response = await axios.post("/api/postLike", {
+        ip_id: stateList.ip_address,
+        sub_id: pathname.replace(/\//g, ""),
+      });
+      let willIncrement = false;
+      if (response.status === 201) {
+        willIncrement = true;
+      }
+      try {
+        const response2 = await axios.put(
+          `/api/putLike?id=${pathname.replace(/\//g, "")}`,
+          { increment: willIncrement }
+        );
+        if (response2.status === 200) {
+          console.log("updated");
+          setProfile((prev) => {
+            if (prev !== undefined) {
+              let updatedProfile = { ...prev, likes: response2.data.likes };
+              return updatedProfile;
+            }
+          });
+          checkLike();
+        }
+      } catch (error) {
+        console.log("error when updating like count");
+      }
+    } catch (error) {
+      console.log("error when registering like");
+    }
+  };
+
   const fetchSubmission = async (submissionId: string) => {
     try {
       const response = await fetch(`/api/getSubmission?id=${submissionId}`);
@@ -41,6 +112,7 @@ const Submission: React.FC<PropsFromRedux> = ({
       }
       const data = await response.json();
       setProfile(data.data);
+      checkLike();
     } catch (error) {
       console.error("Error fetching submission:", error);
     }
@@ -57,16 +129,43 @@ const Submission: React.FC<PropsFromRedux> = ({
           >
             return to submissions
           </button>
-          <div className="bg-white shadow-md rounded mb-2 flex flex-col xl:flex-row gap-2">
-            <img
-              src={
-                profile.personal.image.value != ""
-                  ? profile.personal.image.value
-                  : "/test-profile.png"
-              }
-              alt="test-picture"
-              className="rounded-l xl:w-1/2 xl:object-normal object-cover"
-            />
+          <div className="bg-white shadow-md rounded mb-2 flex flex-col xl:flex-row gap-1">
+            <div className="xl:w-1/2 xl:object-normal object-cover relative">
+              <img
+                src={
+                  profile.personal.image.value != ""
+                    ? profile.personal.image.value
+                    : "/test-profile.png"
+                }
+                alt="test-picture"
+                className="rounded-t lg:rounded-l z-0"
+              />
+              <div className="absolute bg-gradient-to-t from-black from-5% via-transparent via-50% w-full h-full top-0 opacity-70" />
+              <div className="z-40 absolute left-0 bottom-0 p-4 flex gap-2">
+                <StyledRating
+                  className="fill-red"
+                  name="customized-color"
+                  onClick={handleLike}
+                  value={clientState.hasLiked ? 1 : 0}
+                  max={1}
+                  size={"medium"}
+                  precision={1}
+                  icon={
+                    <FavoriteIcon
+                      fontSize="inherit"
+                      style={{ color: "#ff6d75" }}
+                    />
+                  }
+                  emptyIcon={
+                    <FavoriteBorderIcon
+                      fontSize="inherit"
+                      style={{ color: "#ffff" }}
+                    />
+                  }
+                />
+                <p className="text-s self-center text-white">{profile.likes}</p>
+              </div>
+            </div>
 
             <div className="p-4 xl:w-1/2">
               <h2 className="text-stone-700 text-3xl font-bold mb-2 md:text-5xl md:mb-4 ">
@@ -175,41 +274,7 @@ const Submission: React.FC<PropsFromRedux> = ({
               ) : undefined}
             </div>
           </div>
-
-          <h2 className="text-xl md:mb-4 text-slate-700 mb-2 font-bold mt-8">
-            1 comment
-          </h2>
-          <div className="flex shadow mb-4 border rounded">
-            <input
-              type="text"
-              placeholder="add a comment"
-              className={
-                "rounded-l py-2 pl-3 w-4/5 text-gray-700 leading-tight focus:outline-stone-300"
-              }
-            />
-            <button
-              className={
-                "hover:text-red-500 w-1/5 rounded-r bg-stone-100 text-xs py-2 pr-3"
-              }
-            >
-              add
-            </button>
-          </div>
-          <div className="bg-white shadow-md rounded mb-2 flex flex-col gap-2 p-4">
-            <div className="flex justify-between">
-              <h2 className="text-sm md:mb-2 text-slate-700 mb-2 font-semibold">
-                swagman32111
-              </h2>
-              <h2 className="text-sm md:mb-2 text-slate-500 mb-2">
-                1 year ago
-              </h2>
-            </div>
-            <p className="text-left font-normal text-stone-700 text-xs">
-              I really like the fact that he is eating a chicken burger from
-              popeyes because they have the best chicken burgers in town and
-              that is a FACT!
-            </p>
-          </div>
+          <Comments sub_id={pathname.replace(/\//g, "")} />
         </>
       ) : (
         <>
@@ -229,7 +294,7 @@ const Submission: React.FC<PropsFromRedux> = ({
                 variant="rounded"
               />
             </div>
-            <div className="p-4 xl:w-1/2">
+            <div className="xl:w-1/2">
               <Skeleton
                 width={"100%"}
                 height={"100%"}
@@ -250,4 +315,4 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 // Export the connected component
-export default connector(Submission);
+export default connector(SubmissionPage);

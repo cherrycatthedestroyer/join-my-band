@@ -2,27 +2,27 @@ import { connect, ConnectedProps } from "react-redux";
 import { mapDispatchToProps, mapStateToProps } from "../../store/actions";
 
 import {
-  sortByAchievement,
+  sortByLikes,
   sortByExperience,
   sortByFilter,
   sortBySkill,
   filterButtonSelectedStyle,
   filterButtonStyle,
+  SubmissionProfile,
 } from "../../scripts/helper";
 import { SetStateAction, useRef } from "react";
-import { Submission } from "../../store/submissions";
 import { Container } from "@mui/material";
 
 interface SearchBarProps extends PropsFromRedux {
-  subList: Submission[];
-  setSubList: (value: SetStateAction<Submission[]>) => void;
+  subList: SubmissionProfile[];
+  setSubList: (value: SetStateAction<SubmissionProfile[]>) => void;
   resetSubList: () => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
   clientState,
   resetFilters,
-  setAchFilter,
+  setLikeFilter,
   setSkillFilter,
   setExpFilter,
   setSubList,
@@ -39,8 +39,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
     filterList();
   }
   function filterList() {
-    if (clientState.achFilter) {
-      setSubList((prev) => sortByAchievement(prev));
+    if (clientState.likeFilter) {
+      setSubList((prev) => sortByLikes(prev));
     } else if (clientState.expFilter) {
       setSubList((prev) => sortByExperience(prev));
     } else if (clientState.skillFilter) {
@@ -55,12 +55,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
         setSkillFilter(true);
         setSubList((prev) => sortBySkill(prev));
       }
-    } else if (filterType === "achievement") {
-      if (clientState.achFilter) {
+    } else if (filterType === "likes") {
+      if (clientState.likeFilter) {
         handleReset();
       } else {
-        setAchFilter(true);
-        setSubList((prev) => sortByAchievement(prev));
+        setLikeFilter(true);
+        setSubList((prev) => sortByLikes(prev));
       }
     } else if (filterType === "experience") {
       if (clientState.expFilter) {
@@ -89,9 +89,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
           }
         />
         <button
-          className={
-            "hover:text-red-500 w-1/5 rounded-r bg-stone-100 text-xs py-2 pr-3"
-          }
+          className={`w-1/5 rounded-r bg-stone-100 text-xs py-2 pr-3 ${
+            searchInput.current !== null
+              ? searchInput.current!.value.trim().length > 0
+                ? " text-red-500"
+                : ""
+              : ""
+          }`}
           onClick={handleReset}
         >
           clear
@@ -120,13 +124,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
         </button>
         <button
           className={
-            clientState.achFilter
+            clientState.likeFilter
               ? filterButtonSelectedStyle
               : filterButtonStyle
           }
-          onClick={() => handleFilter("achievement")}
+          onClick={() => handleFilter("likes")}
         >
-          Achievements
+          Likes
         </button>
       </div>
     </Container>

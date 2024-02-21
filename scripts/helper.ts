@@ -109,6 +109,15 @@ function totalExperience(stateObject: Submission) {
   return results;
 }
 
+function compareLikes(a: SubmissionProfile, b: SubmissionProfile) {
+  if (a.likes > b.likes) {
+    return -1;
+  } else {
+    return 1;
+  }
+  return 0;
+}
+
 function compareSkill(a: Submission, b: Submission) {
   if (totalSkills(a) > totalSkills(b)) {
     return -1;
@@ -146,25 +155,42 @@ function containsInstrument(a: Submission, term: string) {
   return found;
 }
 
-export function sortBySkill(stateObject: Submission[]) {
+export interface Comment {
+  content: string;
+  visitor_name: string;
+  time: string;
+}
+
+export interface SubmissionProfile extends Submission {
+  likes: string;
+  comments: Comment[];
+}
+
+export function sortByLikes(stateObject: SubmissionProfile[]) {
+  let unsortedObject = [...stateObject];
+  let updatedObject = unsortedObject.sort(compareLikes);
+  return updatedObject;
+}
+
+export function sortBySkill(stateObject: SubmissionProfile[]) {
   let unsortedObject = [...stateObject];
   let updatedObject = unsortedObject.sort(compareSkill);
   return updatedObject;
 }
 
-export function sortByExperience(stateObject: Submission[]) {
+export function sortByExperience(stateObject: SubmissionProfile[]) {
   let unsortedObject = [...stateObject];
   let updatedObject = unsortedObject.sort(compareExperience);
   return updatedObject;
 }
 
-export function sortByAchievement(stateObject: Submission[]) {
+export function sortByAchievement(stateObject: SubmissionProfile[]) {
   let unsortedObject = [...stateObject];
   let updatedObject = unsortedObject.sort(compareAchievements);
   return updatedObject;
 }
 
-export function sortByFilter(stateObject: Submission[], term: string) {
+export function sortByFilter(stateObject: SubmissionProfile[], term: string) {
   let searchVal = term.trim().toLowerCase();
   if (searchVal !== "" && term.length > 2) {
     let unsortedObject = [...stateObject];
@@ -176,7 +202,19 @@ export function sortByFilter(stateObject: Submission[], term: string) {
   return stateObject;
 }
 
-function getTimeSince(dateParam: string): string {
+export function getCurrentDateTime(): string {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const hours = String(currentDate.getHours()).padStart(2, "0");
+  const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+  const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+}
+
+export function getTimeSince(dateParam: string): string {
   const currentDate = new Date();
   const inputDate = new Date(dateParam);
 
