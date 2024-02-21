@@ -17,9 +17,12 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       />
       <Navbar />
       {children}
-      <footer className="text-xs my-6 mx-auto">
-        created by josh job © 2024
-      </footer>
+      <Container
+        disableGutters
+        sx={{ marginLeft: "auto", marginRight: "auto" }}
+      >
+        <footer>Created by Josh Job © 2024</footer>
+      </Container>
     </Container>
   );
 };
