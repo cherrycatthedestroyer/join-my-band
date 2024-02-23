@@ -27,7 +27,7 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
       sx={{ display: "flex" }}
       disableGutters
     >
-      <div className="rounded-l w-2/5 relative">
+      <div className="rounded-l relative w-2/5">
         <img
           src={
             item.personal.image.value != ""
@@ -35,7 +35,7 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
               : "/test-profile.png"
           }
           alt="test-picture"
-          className="rounded-l z-0"
+          className="rounded-l z-0 object-cover"
         />
 
         <>
