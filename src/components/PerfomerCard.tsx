@@ -113,24 +113,26 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
             <span>{" and +" + (item.instruments.length - 1)}</span>
           ) : undefined}
         </div>
-        <div className="collapse lg:visible">
-          <ul className="flex flex-wrap gap-2">
-            {item.achievements[0].achievement_name.value.trim().length > 0 ? (
-              <li className={cardButtonStyling + " max-w-10 md:max-w-32"}>
-                <p className="truncate">
-                  {item.achievements[0].achievement_name.value}
-                </p>
-              </li>
-            ) : undefined}
-            {item.achievements.length > 1 ? (
-              <li className={cardButtonStyling + " max-w-32"}>
-                <p className="truncate">
-                  {"+ " + (item.achievements.length - 1)}
-                </p>
-              </li>
-            ) : undefined}
-          </ul>
-        </div>
+        {width < 768 ? (
+          <div className="collapse lg:visible">
+            <ul className="flex flex-wrap gap-2">
+              {item.achievements[0].achievement_name.value.trim().length > 0 ? (
+                <li className={cardButtonStyling + " max-w-10 md:max-w-32"}>
+                  <p className="truncate">
+                    {item.achievements[0].achievement_name.value}
+                  </p>
+                </li>
+              ) : undefined}
+              {item.achievements.length > 1 ? (
+                <li className={cardButtonStyling + " max-w-32"}>
+                  <p className="truncate">
+                    {"+ " + (item.achievements.length - 1)}
+                  </p>
+                </li>
+              ) : undefined}
+            </ul>
+          </div>
+        ) : undefined}
       </div>
     </Container>
   );
