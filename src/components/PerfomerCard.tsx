@@ -38,7 +38,7 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
           className="rounded-l z-0 object-cover"
         />
 
-        <>
+        <div>
           <div className="absolute bg-gradient-to-t from-black from-5% via-transparent via-50% w-full h-full top-0 opacity-70" />
           <div className="z-40 absolute left-0 bottom-0 p-4 flex gap-2">
             {parseInt(item.likes) > 0 ? (
@@ -56,7 +56,7 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
               </div>
             ) : undefined}
           </div>
-        </>
+        </div>
       </div>
       <div className="flex flex-col p-4">
         <h2 className="text-stone-700 text-base font-semibold mb-2 lg:text-2xl xl:text-4xl xl:mb-4 text-nowrap">
@@ -113,26 +113,25 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
             <span>{" and +" + (item.instruments.length - 1)}</span>
           ) : undefined}
         </div>
-        {width < 768 ? (
-          <div className="collapse lg:visible">
-            <ul className="flex flex-wrap gap-2">
-              {item.achievements[0].achievement_name.value.trim().length > 0 ? (
-                <li className={cardButtonStyling + " max-w-10 md:max-w-32"}>
-                  <p className="truncate">
-                    {item.achievements[0].achievement_name.value}
-                  </p>
-                </li>
-              ) : undefined}
-              {item.achievements.length > 1 ? (
-                <li className={cardButtonStyling + " max-w-32"}>
-                  <p className="truncate">
-                    {"+ " + (item.achievements.length - 1)}
-                  </p>
-                </li>
-              ) : undefined}
-            </ul>
-          </div>
-        ) : undefined}
+
+        <div className="collapse lg:visible">
+          <ul className="flex flex-wrap gap-2">
+            {item.achievements[0].achievement_name.value.trim().length > 0 ? (
+              <li className={cardButtonStyling + " max-w-10 md:max-w-32"}>
+                <p className="truncate">
+                  {item.achievements[0].achievement_name.value}
+                </p>
+              </li>
+            ) : undefined}
+            {item.achievements.length > 1 ? (
+              <li className={cardButtonStyling + " max-w-32"}>
+                <p className="truncate">
+                  {"+ " + (item.achievements.length - 1)}
+                </p>
+              </li>
+            ) : undefined}
+          </ul>
+        </div>
       </div>
     </Container>
   );
