@@ -58,7 +58,7 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col p-4">
+      <div className="flex flex-col py-2 px-4 md:py-4">
         <h2 className="text-stone-700 text-base font-semibold mb-2 lg:text-2xl xl:text-4xl xl:mb-4 text-nowrap">
           {item.personal.performer_name.value}
         </h2>
@@ -104,7 +104,11 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
         </div>
         <div className="lowercase text-stone-600 text-xs font-normal mb-4 xl:text-base">
           <span>
-            {"plays " + item.instruments[0].instrument_profeciency.value}
+            {`plays ${
+              width < 678
+                ? ""
+                : item.instruments[0].instrument_profeciency.value
+            }`}
           </span>
           <span className="font-bold">
             {" " + item.instruments[0].instrument_name.value}
@@ -114,7 +118,7 @@ const PerformerCard: React.FC<ItemProps> = ({ item, item_index }) => {
           ) : undefined}
         </div>
 
-        <div className="collapse lg:visible">
+        <div className="hidden md:block">
           <ul className="flex flex-wrap gap-2">
             {item.achievements[0].achievement_name.value.trim().length > 0 ? (
               <li className={cardButtonStyling + " max-w-10 md:max-w-32"}>

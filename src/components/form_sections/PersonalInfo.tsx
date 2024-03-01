@@ -164,7 +164,7 @@ const PersonalInfo: React.FC<PropsFromRedux> = ({
             handleChange={handleSelectChange}
             section={stateList.personal.transport.section_name}
             type="number"
-            options={["Car", "Train", "Taxi"]}
+            options={["Car", "Train", "Taxi", "Horse"]}
           />
         </div>
       </div>
